@@ -7,7 +7,10 @@ from __future__ import unicode_literals
 
 import django
 from django.contrib import admin
-from django.contrib.admin.utils import flatten_fieldsets
+try:
+    from django.contrib.admin.utils import flatten_fieldsets
+except ImportError:
+    from django.contrib.admin.util import flatten_fieldsets
 
 from read_only_admin.settings import PERMISSION_PREFIX
 
@@ -45,9 +48,9 @@ class ReadonlyAdmin(admin.ModelAdmin):
             })
             if str(perm) == str(tail):
                 if request.user.has_perm(str(permission)) and not request.user.is_superuser:
-                    if self.declared_fieldsets:
+                    if self.get_fieldsets(request=request, obj=obj):
 
-                        return flatten_fieldsets(self.declared_fieldsets)
+                        return flatten_fieldsets(self.get_fieldsets(request=request, obj=obj))
                     else:
 
                         return list(set([field.name for field in self.opts.local_fields] + [field.name for field in self.opts.local_many_to_many]))

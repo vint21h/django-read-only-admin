@@ -5,7 +5,8 @@
 
 from __future__ import unicode_literals
 
-from django.db.models.signals import post_syncdb
+import django
+from django.db.models import signals
 
 from read_only_admin.signals import add_readonly_permissions
 
@@ -13,5 +14,8 @@ from read_only_admin.signals import add_readonly_permissions
 __all__ = []
 
 
-# connect signals for old django versions (< 1.7)
-post_syncdb.connect(add_readonly_permissions)
+# connect signal
+if django.VERSION < (1, 7):
+    signals.post_syncdb.connect(add_readonly_permissions)
+else:
+    signals.post_migrate.connect(add_readonly_permissions)

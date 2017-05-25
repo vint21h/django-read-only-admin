@@ -64,6 +64,7 @@ def readonly_submit_row(context):
         if str(perm) == str(tail):
             if user.has_perm(str(permission)) and not user.is_superuser:
                 ctx.update({
+                    "show_delete_link": False,
                     "show_save_and_add_another": False,
                     "show_save_and_continue": False,
                     "show_save": False,
