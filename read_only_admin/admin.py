@@ -4,6 +4,7 @@
 # read_only_admin/admin.py
 
 from __future__ import unicode_literals
+from collections import OrderedDict
 
 import django
 from django.contrib import admin
@@ -12,7 +13,10 @@ try:
 except ImportError:
     from django.contrib.admin.util import flatten_fieldsets
 
-from read_only_admin.settings import PERMISSION_PREFIX
+from read_only_admin.settings import (
+    PERMISSION_PREFIX,
+    EMPTY_ACTIONS,
+)
 
 
 __all__ = [
@@ -65,8 +69,12 @@ class ReadonlyAdmin(admin.ModelAdmin):
         :param request: django HTTP request object.
         :type request: django.http.request.HttpRequest.
         :return: admin actions.
-        :rtype: dict.
+        :rtype: OrderedDict
         """
+
+        if EMPTY_ACTIONS:
+            # empty actions
+            return OrderedDict()
 
         actions = super(ReadonlyAdmin, self).get_actions(request)
         perm = "{app}.{prefix}_{model}".format(**{

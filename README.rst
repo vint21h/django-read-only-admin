@@ -23,6 +23,19 @@ Add ``"read_only_admin"`` to ``settings.INSTALLED_APPS``.
         "read_only_admin",
     )
 
+Usage
+-----
+Just inherit your custom django admin class from ``read_only_admin.admin.ReadonlyAdmin``.
+
+For example:
+
+.. code-block:: python
+
+    from read_only_admin.admin import ReadonlyAdmin
+
+    class MyCustomAdmin(ReadonlyAdmin):
+        pass
+
 
 Settings
 --------
@@ -31,6 +44,9 @@ Settings
 
 ``READONLY_ADMIN_PERMISSION_NAME_PREFIX``
     Read only permission name prefix. Defaults to: ``Read only``.
+
+``READONLY_ADMIN_EMPTY_ACTIONS``
+    Empty admin actions list or just remove delete selected action. Defaults to: ``True``.
 
 
 Licensing
