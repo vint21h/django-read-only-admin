@@ -53,6 +53,8 @@ Licensing
 ---------
 django-read-only-admin uses the MIT license. Please check the MIT-LICENSE file for more details.
 
+Some part of code fairly stolen from teh internets with reference to source. So if you author of this code, please contact me.
+
 Contacts
 --------
 **Project Website**: https://github.com/vint21h/django-read-only-admin/
