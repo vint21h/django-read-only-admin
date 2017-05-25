@@ -5,8 +5,9 @@
 
 from __future__ import unicode_literals
 
+import django
 from django.contrib import admin
-from django.contrib.admin.util import flatten_fieldsets
+from django.contrib.admin.utils import flatten_fieldsets
 
 from read_only_admin.settings import PERMISSION_PREFIX
 
@@ -20,6 +21,8 @@ class ReadonlyAdmin(admin.ModelAdmin):
     """
     Readonly admin.
     """
+
+    change_form_template = "read_only_admin/legacy/change_form.html" if django.VERSION < (1, 7) else "read_only_admin/modern/change_form.html"
 
     def get_readonly_fields(self, request, obj=None):
         """

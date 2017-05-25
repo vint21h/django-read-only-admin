@@ -1,0 +1,14 @@
+{# django-read-only-admin #}
+{# read_only_admin/templates/read_only_admin/modern/change_form.html #}
+
+{% extends "admin/change_form.html" %}
+
+{% load read_only_admin_tags %}
+
+{% block field_sets %}
+    {% for fieldset in adminform %}
+      {% include "read_only_admin/includes/modern/fieldset.html" %}
+    {% endfor %}
+{% endblock %}
+
+{% block submit_buttons_bottom %}{% readonly_submit_row %}{% endblock %}
