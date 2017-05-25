@@ -8,6 +8,10 @@ A django-read-only-admin documentation
 
 .. contents::
 
+Warning
+-------
+django-read-only-admin currently does not support ``list_editable`` and ``inlines``. Stay tune.
+
 Installation
 ------------
 * Obtain your copy of source code from the git repository: ``git clone https://github.com/vint21h/django-read-only-admin.git``. Or download the latest release from https://github.com/vint21h/django-read-only-admin/tags/.
@@ -53,7 +57,7 @@ Licensing
 ---------
 django-read-only-admin uses the MIT license. Please check the MIT-LICENSE file for more details.
 
-Some part of code fairly stolen from teh internets with reference to source. So if you author of this code, please contact me.
+Some part of code fairly stolen from teh internets with reference to source. So, if you author of this code, please contact me.
 
 Contacts
 --------
