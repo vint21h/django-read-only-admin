@@ -10,7 +10,7 @@ A django-read-only-admin documentation
 
 Warning
 -------
-django-read-only-admin currently does not support ``list_editable`` and ``inlines``. Stay tune.
+django-read-only-admin currently does not support ``list_editable``. Stay tune.
 
 Installation
 ------------
@@ -27,6 +27,9 @@ Add ``"read_only_admin"`` to ``settings.INSTALLED_APPS``.
         "read_only_admin",
     )
 
+Run ``./manage.py migrate`` for django modern versions (>= 1.7) or ``./manage.py syncdb`` for legacy django versions (< 1.7).
+Then add user/group change/delete/add/readonly model permissions.
+
 Usage
 -----
 Just inherit your custom django admin class from ``read_only_admin.admin.ReadonlyAdmin``.
@@ -38,7 +41,30 @@ For example:
     from read_only_admin.admin import ReadonlyAdmin
 
     class MyCustomAdmin(ReadonlyAdmin):
+
         pass
+
+Also tabular and stacked inlines are supported.
+
+For example:
+
+.. code-block:: python
+
+    from read_only_admin.admin import (
+        ReadonlyStackedInline,
+        ReadonlyTabularInline,
+    )
+
+    class MyCustomTabularInline(ReadonlyTabularInline):
+
+        model = MyModel
+        extra = 0
+
+
+    class MyCustomStackedInline(ReadonlyStackedInline):
+
+        model = MyModel
+        extra = 0
 
 
 Settings
