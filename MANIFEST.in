@@ -8,3 +8,4 @@ include read_only_admin/templates/read_only_admin/modern/change_form.html
 include read_only_admin/templates/read_only_admin/legacy/change_form.html
 include read_only_admin/templates/read_only_admin/includes/modern/fieldset.html
 include read_only_admin/templates/read_only_admin/includes/legacy/fieldset.html
+include read_only_admin/templates/admin/pagination.html

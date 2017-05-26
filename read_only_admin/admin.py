@@ -11,6 +11,7 @@ import django
 from django.contrib import admin
 from django.contrib.auth import get_permission_codename
 from django.forms.models import modelformset_factory
+from django.contrib.admin.views.main import ChangeList
 try:
     from django.contrib.admin.utils import flatten_fieldsets
 except ImportError:
@@ -29,12 +30,49 @@ __all__ = [
 ]
 
 
+class ReadonlyChangeList(ChangeList):
+    """
+    Readonly change list.
+    """
+
+    def __init__(self, request, model, list_display, list_display_links, list_filter, date_hierarchy, search_fields, list_select_related, list_per_page, list_max_show_all, list_editable, model_admin):
+        """
+        Override to set extra readonly property.
+        """
+
+        super(ReadonlyChangeList, self).__init__(request=request, model=model, list_display=list_display, list_display_links=list_display_links, list_filter=list_filter, date_hierarchy=date_hierarchy, search_fields=search_fields, list_select_related=list_select_related, list_per_page=list_per_page, list_max_show_all=list_max_show_all, list_editable=list_editable, model_admin=model_admin)
+
+        self.readonly = False
+
+        for permission in request.user.get_all_permissions():
+            head, sep, tail = permission.partition(".")
+            perm = "{prefix}_{model}".format(**{
+                "prefix": PERMISSION_PREFIX,
+                "model": self.model.__name__.lower(),
+            })
+            if str(perm) == str(tail):
+                if request.user.has_perm(str(permission)) and not request.user.is_superuser:
+                    self.readonly = True
+
+
 class ReadonlyAdmin(admin.ModelAdmin):
     """
     Readonly admin.
     """
 
     change_form_template = "read_only_admin/legacy/change_form.html" if django.VERSION < (1, 7) else "read_only_admin/modern/change_form.html"
+
+    def get_changelist(self, request, **kwargs):
+        """
+        Returns the ReadonlyChangeList class for use on the changelist page.
+
+        :param request: django HTTP request object.
+        :type request: django.http.request.HttpRequest.
+        :return: readonly change list.
+        :rtype: read_only_admin.admin.ReadonlyChangeList.
+        """
+
+        return ReadonlyChangeList
 
     def get_changelist_formset(self, request, **kwargs):
         """

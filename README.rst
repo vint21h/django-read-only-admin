@@ -8,10 +8,6 @@ A django-read-only-admin documentation
 
 .. contents::
 
-Warning
--------
-django-read-only-admin currently partially support ``list_editable``. Stay tune.
-
 Installation
 ------------
 * Obtain your copy of source code from the git repository: ``git clone https://github.com/vint21h/django-read-only-admin.git``. Or download the latest release from https://github.com/vint21h/django-read-only-admin/tags/.
@@ -66,6 +62,7 @@ For example:
         model = MyModel
         extra = 0
 
+If you use ``list_editable`` in your custom admin classes, copy ``read_only_admin/templates/admin/pagination.html`` to your project ``templates/admin`` directory.
 
 Settings
 --------
