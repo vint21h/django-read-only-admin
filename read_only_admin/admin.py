@@ -5,10 +5,12 @@
 
 from __future__ import unicode_literals
 from collections import OrderedDict
+from functools import partial
 
 import django
 from django.contrib import admin
 from django.contrib.auth import get_permission_codename
+from django.forms.models import modelformset_factory
 try:
     from django.contrib.admin.utils import flatten_fieldsets
 except ImportError:
@@ -33,6 +35,33 @@ class ReadonlyAdmin(admin.ModelAdmin):
     """
 
     change_form_template = "read_only_admin/legacy/change_form.html" if django.VERSION < (1, 7) else "read_only_admin/modern/change_form.html"
+
+    def get_changelist_formset(self, request, **kwargs):
+        """
+        Empty FormSet class for use on the changelist page if list_editable and readonly permission is used.
+
+        :param request: django HTTP request object.
+        :type request: django.http.request.HttpRequest.
+        :return: FormSet for changelist.
+        :rtype: django.forms.formsets.BaseFormSet.
+        """
+
+        for permission in request.user.get_all_permissions():
+            head, sep, tail = permission.partition(".")
+            perm = "{prefix}_{model}".format(**{
+                "prefix": PERMISSION_PREFIX,
+                "model": self.model.__name__.lower(),
+            })
+            if str(perm) == str(tail):
+                if request.user.has_perm(str(permission)) and not request.user.is_superuser:
+                    defaults = {
+                        "formfield_callback": partial(self.formfield_for_dbfield, request=request),
+                    }
+                    defaults.update(kwargs)
+
+                    return modelformset_factory(self.model, self.get_changelist_form(request), extra=0, fields=(), **defaults)
+
+        return super(ReadonlyAdmin, self).get_changelist_formset(request=request, **kwargs)
 
     def get_readonly_fields(self, request, obj=None):
         """
@@ -85,7 +114,6 @@ class ReadonlyAdmin(admin.ModelAdmin):
             "prefix": PERMISSION_PREFIX,
             "model": self.model.__name__.lower(),
         })
-
         if request.user.has_perm(perm) and not request.user.is_superuser:
             if "delete_selected" in actions:
                 del actions["delete_selected"]

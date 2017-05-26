@@ -10,7 +10,7 @@ A django-read-only-admin documentation
 
 Warning
 -------
-django-read-only-admin currently does not support ``list_editable``. Stay tune.
+django-read-only-admin currently partially support ``list_editable``. Stay tune.
 
 Installation
 ------------
