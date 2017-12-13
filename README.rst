@@ -73,7 +73,7 @@ Settings
     Read only permission name prefix. Defaults to: ``Read only``.
 
 ``READONLY_ADMIN_EMPTY_ACTIONS``
-    Empty admin actions list or just remove delete selected action. Defaults to: ``True``.
+    Empty admin actions list (exclude superusers) or just remove delete selected action. Defaults to: ``True``.
 
 
 Licensing

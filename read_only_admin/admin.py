@@ -142,10 +142,6 @@ class ReadonlyAdmin(admin.ModelAdmin):
         :rtype: OrderedDict
         """
 
-        if EMPTY_ACTIONS:
-            # empty actions
-            return OrderedDict()
-
         actions = super(ReadonlyAdmin, self).get_actions(request)
         perm = "{app}.{prefix}_{model}".format(**{
             "app": self.model._meta.app_label,
@@ -156,10 +152,11 @@ class ReadonlyAdmin(admin.ModelAdmin):
             if "delete_selected" in actions:
                 del actions["delete_selected"]
 
-            return actions
-        else:
+        if EMPTY_ACTIONS and not request.user.is_superuser:
+            # empty actions list (exclude superusers)
+            actions = OrderedDict()
 
-            return actions
+        return actions
 
 
 class ReadonlyInline(admin.TabularInline):
