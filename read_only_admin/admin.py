@@ -134,7 +134,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
     def get_actions(self, request):
         """
         Get actions.
-        Get from: http://vinitkumar.me/articles/2014/05/18/Get-Readonly-Mode-IN-Django/.
+        Get from: https://vinitkumar.me/articles/2014/05/18/Get-Readonly-Mode-IN-Django.html.
 
         :param request: django HTTP request object.
         :type request: django.http.request.HttpRequest.
