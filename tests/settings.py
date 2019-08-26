@@ -54,7 +54,7 @@ NOSE_ARGS = [
     "--with-coverage",
     "--cover-inclusive",
     "--cover-erase",
-    "--cover-package=opensearch",
+    "--cover-package=read_only_admin",
     "--logging-clear-handlers",
 ]  # type: list
 

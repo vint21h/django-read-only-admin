@@ -1,5 +1,5 @@
 # django-read-only-admin
-# xicon/locale/uk/LC_MESSAGES/django.po
+# read_only_admin/locale/uk/LC_MESSAGES/django.po
 #
 #, fuzzy
 msgid ""
