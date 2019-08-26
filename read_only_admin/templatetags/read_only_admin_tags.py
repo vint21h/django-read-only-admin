@@ -3,7 +3,6 @@
 # django-read-only-admin
 # read_only_admin/templatetags/read_only_admin_tags.py
 
-from __future__ import unicode_literals
 
 from django import template
 from django.contrib.admin.templatetags.admin_modify import submit_row
@@ -11,10 +10,7 @@ from django.contrib.admin.templatetags.admin_modify import submit_row
 from read_only_admin.settings import PERMISSION_PREFIX
 
 
-__all__ = [
-    "unescape",
-    "readonly_submit_row",
-]
+__all__ = ["unescape", "readonly_submit_row"]
 
 
 register = template.Library()
@@ -31,7 +27,13 @@ def unescape(value):
     :rtype: unicode.
     """
 
-    codes = (("'", "&#39;"), ('"', "&quot;"), (">", "&gt;"), ("<", "&lt;"), ("&", "&amp;"))
+    codes = (
+        ("'", "&#39;"),
+        ('"', "&quot;"),
+        (">", "&gt;"),
+        ("<", "&lt;"),
+        ("&", "&amp;"),
+    )
 
     for code in codes:
         value = value.replace(code[1], code[0])
@@ -57,18 +59,19 @@ def readonly_submit_row(context):
 
     for permission in user.get_all_permissions():
         head, sep, tail = permission.partition(".")
-        perm = "{prefix}_{model}".format(**{
-            "prefix": PERMISSION_PREFIX,
-            "model": model,
-        })
+        perm = "{prefix}_{model}".format(
+            **{"prefix": PERMISSION_PREFIX, "model": model}
+        )
         if str(perm) == str(tail):
             if user.has_perm(str(permission)) and not user.is_superuser:
-                ctx.update({
-                    "show_delete_link": False,
-                    "show_save_and_add_another": False,
-                    "show_save_and_continue": False,
-                    "show_save": False,
-                })
+                ctx.update(
+                    {
+                        "show_delete_link": False,
+                        "show_save_and_add_another": False,
+                        "show_save_and_continue": False,
+                        "show_save": False,
+                    }
+                )
 
             return ctx
 

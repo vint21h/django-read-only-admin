@@ -1,0 +1,19 @@
+# django-read-only-admin
+# .coveragerc
+
+
+[run]
+branch = True
+source = read_only_admin
+omit =
+    */__init__.py
+   read_only_admin/apps.py
+
+[report]
+omit =
+    */__init__.py
+    read_only_admin/apps.py
+exclude_lines =
+    pragma: no cover
+
+[xml]

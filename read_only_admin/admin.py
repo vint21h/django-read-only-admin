@@ -4,30 +4,26 @@
 # read_only_admin/admin.py
 
 from __future__ import unicode_literals
+
 from collections import OrderedDict
 from functools import partial
 
 import django
 from django.contrib import admin
+from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth import get_permission_codename
 from django.forms.models import modelformset_factory
-from django.contrib.admin.views.main import ChangeList
+
+from read_only_admin.settings import EMPTY_ACTIONS, PERMISSION_PREFIX
+
+
 try:
     from django.contrib.admin.utils import flatten_fieldsets
 except ImportError:
     from django.contrib.admin.util import flatten_fieldsets
 
-from read_only_admin.settings import (
-    PERMISSION_PREFIX,
-    EMPTY_ACTIONS,
-)
 
-
-__all__ = [
-    "ReadonlyAdmin",
-    "ReadonlyStackedInline",
-    "ReadonlyTabularInline",
-]
+__all__ = ["ReadonlyAdmin", "ReadonlyStackedInline", "ReadonlyTabularInline"]
 
 
 class ReadonlyChangeList(ChangeList):
@@ -35,23 +31,52 @@ class ReadonlyChangeList(ChangeList):
     Readonly change list.
     """
 
-    def __init__(self, request, model, list_display, list_display_links, list_filter, date_hierarchy, search_fields, list_select_related, list_per_page, list_max_show_all, list_editable, model_admin):
+    def __init__(
+        self,
+        request,
+        model,
+        list_display,
+        list_display_links,
+        list_filter,
+        date_hierarchy,
+        search_fields,
+        list_select_related,
+        list_per_page,
+        list_max_show_all,
+        list_editable,
+        model_admin,
+    ):
         """
         Override to set extra readonly property.
         """
 
-        super(ReadonlyChangeList, self).__init__(request=request, model=model, list_display=list_display, list_display_links=list_display_links, list_filter=list_filter, date_hierarchy=date_hierarchy, search_fields=search_fields, list_select_related=list_select_related, list_per_page=list_per_page, list_max_show_all=list_max_show_all, list_editable=list_editable, model_admin=model_admin)
+        super(ReadonlyChangeList, self).__init__(
+            request=request,
+            model=model,
+            list_display=list_display,
+            list_display_links=list_display_links,
+            list_filter=list_filter,
+            date_hierarchy=date_hierarchy,
+            search_fields=search_fields,
+            list_select_related=list_select_related,
+            list_per_page=list_per_page,
+            list_max_show_all=list_max_show_all,
+            list_editable=list_editable,
+            model_admin=model_admin,
+        )
 
         self.readonly = False
 
         for permission in request.user.get_all_permissions():
             head, sep, tail = permission.partition(".")
-            perm = "{prefix}_{model}".format(**{
-                "prefix": PERMISSION_PREFIX,
-                "model": self.model.__name__.lower(),
-            })
+            perm = "{prefix}_{model}".format(
+                **{"prefix": PERMISSION_PREFIX, "model": self.model.__name__.lower()}
+            )
             if str(perm) == str(tail):
-                if request.user.has_perm(str(permission)) and not request.user.is_superuser:
+                if (
+                    request.user.has_perm(str(permission))
+                    and not request.user.is_superuser
+                ):
                     self.readonly = True
 
 
@@ -60,7 +85,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
     Readonly admin.
     """
 
-    change_form_template = "read_only_admin/legacy/change_form.html" if django.VERSION < (1, 7) else "read_only_admin/modern/change_form.html"
+    change_form_template = "read_only_admin/lchange_form.html"
 
     def get_changelist(self, request, **kwargs):
         """
@@ -86,20 +111,32 @@ class ReadonlyAdmin(admin.ModelAdmin):
 
         for permission in request.user.get_all_permissions():
             head, sep, tail = permission.partition(".")
-            perm = "{prefix}_{model}".format(**{
-                "prefix": PERMISSION_PREFIX,
-                "model": self.model.__name__.lower(),
-            })
+            perm = "{prefix}_{model}".format(
+                **{"prefix": PERMISSION_PREFIX, "model": self.model.__name__.lower()}
+            )
             if str(perm) == str(tail):
-                if request.user.has_perm(str(permission)) and not request.user.is_superuser:
+                if (
+                    request.user.has_perm(str(permission))
+                    and not request.user.is_superuser
+                ):
                     defaults = {
-                        "formfield_callback": partial(self.formfield_for_dbfield, request=request),
+                        "formfield_callback": partial(
+                            self.formfield_for_dbfield, request=request
+                        )
                     }
                     defaults.update(kwargs)
 
-                    return modelformset_factory(self.model, self.get_changelist_form(request), extra=0, fields=(), **defaults)
+                    return modelformset_factory(
+                        self.model,
+                        self.get_changelist_form(request),
+                        extra=0,
+                        fields=(),
+                        **defaults
+                    )
 
-        return super(ReadonlyAdmin, self).get_changelist_formset(request=request, **kwargs)
+        return super(ReadonlyAdmin, self).get_changelist_formset(
+            request=request, **kwargs
+        )
 
     def get_readonly_fields(self, request, obj=None):
         """
@@ -116,18 +153,27 @@ class ReadonlyAdmin(admin.ModelAdmin):
 
         for permission in request.user.get_all_permissions():
             head, sep, tail = permission.partition(".")
-            perm = "{prefix}_{model}".format(**{
-                "prefix": PERMISSION_PREFIX,
-                "model": self.model.__name__.lower(),
-            })
+            perm = "{prefix}_{model}".format(
+                **{"prefix": PERMISSION_PREFIX, "model": self.model.__name__.lower()}
+            )
             if str(perm) == str(tail):
-                if request.user.has_perm(str(permission)) and not request.user.is_superuser:
+                if (
+                    request.user.has_perm(str(permission))
+                    and not request.user.is_superuser
+                ):
                     if self.get_fieldsets(request=request, obj=obj):
 
-                        return flatten_fieldsets(self.get_fieldsets(request=request, obj=obj))
+                        return flatten_fieldsets(
+                            self.get_fieldsets(request=request, obj=obj)
+                        )
                     else:
 
-                        return list(set([field.name for field in self.opts.local_fields] + [field.name for field in self.opts.local_many_to_many]))
+                        return list(
+                            set(
+                                [field.name for field in self.opts.local_fields]
+                                + [field.name for field in self.opts.local_many_to_many]
+                            )
+                        )
 
         return self.readonly_fields
 
@@ -143,11 +189,13 @@ class ReadonlyAdmin(admin.ModelAdmin):
         """
 
         actions = super(ReadonlyAdmin, self).get_actions(request)
-        perm = "{app}.{prefix}_{model}".format(**{
-            "app": self.model._meta.app_label,
-            "prefix": PERMISSION_PREFIX,
-            "model": self.model.__name__.lower(),
-        })
+        perm = "{app}.{prefix}_{model}".format(
+            **{
+                "app": self.model._meta.app_label,
+                "prefix": PERMISSION_PREFIX,
+                "model": self.model.__name__.lower(),
+            }
+        )
         if request.user.has_perm(perm) and not request.user.is_superuser:
             if "delete_selected" in actions:
                 del actions["delete_selected"]
@@ -184,12 +232,14 @@ class ReadonlyInline(admin.TabularInline):
 
         for permission in request.user.get_all_permissions():
             head, sep, tail = permission.partition(".")
-            perm = "{prefix}_{model}".format(**{
-                "prefix": PERMISSION_PREFIX,
-                "model": self.model.__name__.lower(),
-            })
+            perm = "{prefix}_{model}".format(
+                **{"prefix": PERMISSION_PREFIX, "model": self.model.__name__.lower()}
+            )
             if str(perm) == str(tail):
-                if request.user.has_perm(str(permission)) and not request.user.is_superuser:
+                if (
+                    request.user.has_perm(str(permission))
+                    and not request.user.is_superuser
+                ):
 
                     return False
 
@@ -217,12 +267,14 @@ class ReadonlyInline(admin.TabularInline):
 
         for permission in request.user.get_all_permissions():
             head, sep, tail = permission.partition(".")
-            perm = "{prefix}_{model}".format(**{
-                "prefix": PERMISSION_PREFIX,
-                "model": self.model.__name__.lower(),
-            })
+            perm = "{prefix}_{model}".format(
+                **{"prefix": PERMISSION_PREFIX, "model": self.model.__name__.lower()}
+            )
             if str(perm) == str(tail):
-                if request.user.has_perm(str(permission)) and not request.user.is_superuser:
+                if (
+                    request.user.has_perm(str(permission))
+                    and not request.user.is_superuser
+                ):
 
                     return False
 
@@ -245,14 +297,21 @@ class ReadonlyInline(admin.TabularInline):
 
         for permission in request.user.get_all_permissions():
             head, sep, tail = permission.partition(".")
-            perm = "{prefix}_{model}".format(**{
-                "prefix": PERMISSION_PREFIX,
-                "model": self.model.__name__.lower(),
-            })
+            perm = "{prefix}_{model}".format(
+                **{"prefix": PERMISSION_PREFIX, "model": self.model.__name__.lower()}
+            )
             if str(perm) == str(tail):
-                if request.user.has_perm(str(permission)) and not request.user.is_superuser:
+                if (
+                    request.user.has_perm(str(permission))
+                    and not request.user.is_superuser
+                ):
 
-                    return list(set([field.name for field in self.opts.local_fields] + [field.name for field in self.opts.local_many_to_many]))
+                    return list(
+                        set(
+                            [field.name for field in self.opts.local_fields]
+                            + [field.name for field in self.opts.local_many_to_many]
+                        )
+                    )
 
         return self.readonly_fields
 

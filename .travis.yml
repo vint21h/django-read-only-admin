@@ -1,0 +1,25 @@
+# django-read-only-admin
+# .travis.yml
+
+
+language: python
+python:
+  - "3.6"
+  - "3.7"
+
+before_install:
+  - |
+      pip install pipenv
+      pip install -e .[test]
+
+script:
+  - make tox
+
+branches:
+  only:
+  - master
+
+after_success:
+  - |
+      coverage xml
+      python-codacy-coverage -r coverage.xml

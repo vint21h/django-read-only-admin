@@ -1,13 +1,16 @@
 {# django-read-only-admin #}
-{# read_only_admin/templates/read_only_admin/legacy/change_form.html #}
+{# read_only_admin/templates/read_only_admin/change_form.html #}
+
 
 {% extends "admin/change_form.html" %}
 
+
 {% load read_only_admin_tags %}
+
 
 {% block field_sets %}
     {% for fieldset in adminform %}
-      {% include "read_only_admin/includes/legacy/fieldset.html" %}
+      {% include "read_only_admin/includes/fieldset.html" %}
     {% endfor %}
 {% endblock %}
 

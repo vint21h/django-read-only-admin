@@ -1,0 +1,62 @@
+# django-read-only-admin
+# .pre-commit-config.yaml
+
+
+repos:
+- repo: local
+  hooks:
+    - id: seed-isort-config
+      name: seed-isort-config
+      stages: [commit]
+      language: system
+      pass_filenames: false
+      entry: pipenv run seed-isort-config
+      types: [python]
+    - id: isort
+      name: isort
+      stages: [commit]
+      language: system
+      entry: pipenv run isort
+      types: [python]
+    - id: black
+      name: black
+      stages: [commit]
+      language: system
+      entry: pipenv run black read_only_admin
+      types: [python]
+      language_version: python3.7
+    - id: flake8
+      name: flake8
+      stages: [commit]
+      language: system
+      entry: pipenv run flake8
+      types: [python]
+    - id: mypy
+      name: mypy
+      stages: [commit]
+      language: system
+      entry: pipenv run mypy
+      types: [python]
+      pass_filenames: false
+    - id: check-manifest
+      name: check-manifest
+      stages: [commit]
+      language: system
+      pass_filenames: false
+      entry: pipenv run check-manifest
+      types: [python]
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-docstring-first
+      - id: check-json
+      - id: check-yaml
+      - id: check-symlinks
+      - id: check-toml
+      - id: debug-statements
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-merge-conflict
+      - id: detect-private-key

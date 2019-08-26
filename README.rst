@@ -4,6 +4,8 @@
 A django-read-only-admin documentation
 ======================================
 
+|Travis|_ |Coverage|_ |Codacy|_ |Requires|_ |pypi-license| |pypi-version| |pypi-python-version| |pypi-django-version| |pypi-format| |pypi-wheel| |pypi-status|
+
     *django-read-only-admin is a django reusable application that fully implement read only admin*
 
 .. contents::
@@ -15,24 +17,37 @@ Installation
 
 Configuration
 -------------
-Add ``"read_only_admin"`` to ``settings.INSTALLED_APPS``.
+* Add ``"read_only_admin"`` to ``settings.INSTALLED_APPS``.
 
 .. code-block:: python
+
+    # settings.py
 
     INSTALLED_APPS += (
         "read_only_admin",
     )
 
-Run ``./manage.py migrate`` for django modern versions (>= 1.7) or ``./manage.py syncdb`` for legacy django versions (< 1.7).
-Then add user/group change/delete/add/readonly model permissions.
+* Run ``./manage.py migrate``.
+* Then add user/group change/delete/add/readonly model permissions.
+
+django-read-only-admin settings
+-------------------------------
+``READONLY_ADMIN_PERMISSION_PREFIX``
+    Read only permission prefix. Defaults to: ``readonly``.
+
+``READONLY_ADMIN_PERMISSION_NAME_PREFIX``
+    Read only permission name prefix. Defaults to: ``Read only``.
+
+``READONLY_ADMIN_EMPTY_ACTIONS``
+    Empty admin actions list (exclude superusers) or just remove delete selected action. Defaults to: ``True``.
 
 Usage
 -----
 Just inherit your custom django admin class from ``read_only_admin.admin.ReadonlyAdmin``.
 
-For example:
-
 .. code-block:: python
+
+    # admin.py
 
     from read_only_admin.admin import ReadonlyAdmin
 
@@ -42,9 +57,9 @@ For example:
 
 Also tabular and stacked inlines are supported.
 
-For example:
-
 .. code-block:: python
+
+    # admin.py
 
     from read_only_admin.admin import (
         ReadonlyStackedInline,
@@ -64,18 +79,6 @@ For example:
 
 If you use ``list_editable`` in your custom admin classes, copy ``read_only_admin/templates/admin/pagination.html`` to your project ``templates/admin`` directory.
 
-Settings
---------
-``READONLY_ADMIN_PERMISSION_PREFIX``
-    Read only permission prefix. Defaults to: ``readonly``.
-
-``READONLY_ADMIN_PERMISSION_NAME_PREFIX``
-    Read only permission name prefix. Defaults to: ``Read only``.
-
-``READONLY_ADMIN_EMPTY_ACTIONS``
-    Empty admin actions list (exclude superusers) or just remove delete selected action. Defaults to: ``True``.
-
-
 Licensing
 ---------
 django-read-only-admin uses the MIT license. Please check the MIT-LICENSE file for more details.
@@ -89,3 +92,19 @@ Contacts
 **Author**: Alexei Andrushievich <vint21h@vint21h.pp.ua>
 
 For other authors list see AUTHORS file.
+
+.. |Travis| image:: https://travis-ci.org/vint21h/django-read-only-admin.svg?branch=master
+.. |Coverage| image:: https://api.codacy.com/project/badge/Coverage/055abbc43fe24b5fb287bf4317530b68
+.. |Codacy| image:: https://api.codacy.com/project/badge/Grade/055abbc43fe24b5fb287bf4317530b68
+.. |Requires| image:: https://requires.io/github/vint21h/django-read-only-admin/requirements.svg?branch=master
+.. |pypi-license| image:: https://img.shields.io/pypi/l/django-read-only-admin
+.. |pypi-version| image:: https://img.shields.io/pypi/v/django-read-only-admin
+.. |pypi-django-version| image:: https://img.shields.io/pypi/djversions/django-read-only-admin
+.. |pypi-python-version| image:: https://img.shields.io/pypi/pyversions/django-read-only-admin
+.. |pypi-format| image:: https://img.shields.io/pypi/format/django-read-only-admin
+.. |pypi-wheel| image:: https://img.shields.io/pypi/wheel/django-read-only-admin
+.. |pypi-status| image:: https://img.shields.io/pypi/status/django-read-only-admin
+.. _Travis: https://travis-ci.org/vint21h/django-read-only-admin/
+.. _Coverage: https://www.codacy.com/app/vint21h/django-read-only-admin
+.. _Codacy: https://www.codacy.com/app/vint21h/django-read-only-admin
+.. _Requires: https://requires.io/github/vint21h/django-read-only-admin/requirements/?branch=master
