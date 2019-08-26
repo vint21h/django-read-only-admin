@@ -33,10 +33,10 @@ Configuration
 django-read-only-admin settings
 -------------------------------
 ``READONLY_ADMIN_PERMISSION_PREFIX``
-    Read only permission prefix. Defaults to: ``readonly``.
+    Read only permission prefix. Defaults to: ``"readonly"``.
 
 ``READONLY_ADMIN_PERMISSION_NAME_PREFIX``
-    Read only permission name prefix. Defaults to: ``Read only``.
+    Read only permission name prefix. Defaults to: ``"Read only"``.
 
 ``READONLY_ADMIN_EMPTY_ACTIONS``
     Empty admin actions list (exclude superusers) or just remove delete selected action. Defaults to: ``True``.

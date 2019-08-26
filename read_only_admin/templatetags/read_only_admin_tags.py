@@ -7,13 +7,21 @@
 from django import template
 from django.contrib.admin.templatetags.admin_modify import submit_row
 
-from read_only_admin.conf import settings
+from read_only_admin.utils import get_read_only_permission_codename
 
 
 __all__ = ["unescape", "readonly_submit_row"]  # type: list
 
 
 register = template.Library()
+
+_HTML_UNESCAPES = {
+    "&#39;": "'",
+    "&quot;": '"',
+    "&gt;": ">",
+    "&lt;": "<",
+    "&amp;": "&",
+}  # type: dict
 
 
 @register.filter()
@@ -28,16 +36,8 @@ def unescape(value: str) -> str:
     :rtype: str.
     """
 
-    codes = (
-        ("'", "&#39;"),
-        ('"', "&quot;"),
-        (">", "&gt;"),
-        ("<", "&lt;"),
-        ("&", "&amp;"),
-    )  # type: tuple
-
-    for code in codes:
-        value = value.replace(code[1], code[0])
+    for code, char in _HTML_UNESCAPES.items():
+        value = value.replace(old=code, new=char)
 
     return value
 
@@ -55,14 +55,13 @@ def readonly_submit_row(context: template.Context) -> template.Context:
     """
 
     ctx = submit_row(context=context)  # type: template.Context
-    app, separator, model = str(context["opts"]).partition(".")  # type: str, str, str
+    app, separator, model = context["opts"].partition(".")  # type: str, str, str
     user = context["request"].user
 
     for permission in user.get_all_permissions():
         head, sep, tail = permission.partition(".")  # type: str, str, str
-        perm = f"{ settings.READ_ONLY_ADMIN_PERMISSION_PREFIX}_{model}"  # type: str
-        if str(perm) == str(tail):
-            if user.has_perm(str(permission)) and not user.is_superuser:
+        if get_read_only_permission_codename(model=model) == tail:
+            if user.has_perm(permission) and not user.is_superuser:
                 ctx.update(
                     {
                         "show_delete_link": False,
