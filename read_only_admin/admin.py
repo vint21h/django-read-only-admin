@@ -17,7 +17,11 @@ from django.forms.models import modelformset_factory
 from read_only_admin.conf import settings
 
 
-__all__ = ["ReadonlyAdmin", "ReadonlyStackedInline", "ReadonlyTabularInline"]
+__all__ = [
+    "ReadonlyAdmin",
+    "ReadonlyStackedInline",
+    "ReadonlyTabularInline",
+]  # type: list
 
 
 class ReadonlyChangeList(ChangeList):
@@ -39,6 +43,7 @@ class ReadonlyChangeList(ChangeList):
         list_max_show_all,
         list_editable,
         model_admin,
+        sortable_by,
     ):
         """
         Override to set extra readonly property.
@@ -57,6 +62,7 @@ class ReadonlyChangeList(ChangeList):
             list_max_show_all=list_max_show_all,
             list_editable=list_editable,
             model_admin=model_admin,
+            sortable_by=sortable_by,
         )
 
         self.readonly = False

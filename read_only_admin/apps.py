@@ -24,7 +24,7 @@ class DjangoReadOnlyAdminConfig(AppConfig):
 
     def ready(self) -> None:
         """
-        Application read callback.
+        Application ready callback.
 
         :return: nothing.
         :rtype: None.
