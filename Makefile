@@ -3,7 +3,7 @@
 
 
 .ONESHELL:
-PHONY: tox test makemessages compilemessages bumpversion build twine-check twine-upload clean help
+PHONY: tox test makemessages compilemessages bumpversion build check twine-check twine-upload clean help
 TEST_PYPI_URL=https://test.pypi.org/legacy/
 NAME=read_only_admin
 EXTENSIONS=py,html,txt
@@ -32,6 +32,9 @@ bumpversion:
 build:
 	python setup.py $(BUILD_TYPES);\
 
+check:
+	pre-commit run --all-files
+
 twine-check:
 	twine check dist/*;\
 	twine upload -s --repository-url $(TEST_PYPI_URL) dist/*;\
@@ -58,6 +61,8 @@ help:
 	@echo "        Tag current code revision with version."
 	@echo "    build:"
 	@echo "        Build python packages, can specify packages types with 'BUILD_TYPES' variable."
+	@echo "    check:"
+	@echo "        Perform some code checks."
 	@echo "    twine-check:"
 	@echo "        Run some twine checks."
 	@echo "    twine-upload:"
