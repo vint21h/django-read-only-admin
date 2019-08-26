@@ -27,8 +27,8 @@ Configuration
         "read_only_admin",
     )
 
-* Run ``./manage.py migrate``.
-* Then add user/group change/delete/add/readonly model permissions.
+* Run ``django-admin migrate``.
+* Then add ``user/group`` ``change/delete/add/readonly`` model permissions.
 
 django-read-only-admin settings
 -------------------------------

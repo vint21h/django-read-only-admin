@@ -7,24 +7,25 @@
 from django import template
 from django.contrib.admin.templatetags.admin_modify import submit_row
 
-from read_only_admin.settings import PERMISSION_PREFIX
+from read_only_admin.conf import settings
 
 
-__all__ = ["unescape", "readonly_submit_row"]
+__all__ = ["unescape", "readonly_submit_row"]  # type: list
 
 
 register = template.Library()
 
 
 @register.filter()
-def unescape(value):
+def unescape(value: str) -> str:
     """
     Returns the ASCII decoded version of the given HTML string. This does NOT remove normal HTML tags like <p>.
     Get from: https://stackoverflow.com/questions/275174/how-do-i-perform-html-decoding-encoding-using-python-django.
+
     :param value: string wanted to decoded.
-    :type value: unicode.
+    :type value: str.
     :return: decoded string.
-    :rtype: unicode.
+    :rtype: str.
     """
 
     codes = (
@@ -33,7 +34,7 @@ def unescape(value):
         (">", "&gt;"),
         ("<", "&lt;"),
         ("&", "&amp;"),
-    )
+    )  # type: tuple
 
     for code in codes:
         value = value.replace(code[1], code[0])
@@ -42,26 +43,24 @@ def unescape(value):
 
 
 @register.inclusion_tag("admin/submit_line.html", takes_context=True)
-def readonly_submit_row(context):
+def readonly_submit_row(context: template.Context) -> template.Context:
     """
     Read only submit row templatetag.
     Get from: http://anupamshakya.blogspot.com/2013/07/create-readonly-permission-for-all.html.
 
     :param context: template context.
-    :type context: django.template.RequestContext.
+    :type context: django.template.Context.
     :return: updated context.
-    :rtype: django.template.RequestContext.
+    :rtype: django.template.Context.
     """
 
-    ctx = submit_row(context)
-    app, separator, model = str(context["opts"]).partition(".")
+    ctx = submit_row(context=context)  # type: template.Context
+    app, separator, model = str(context["opts"]).partition(".")  # type: str, str, str
     user = context["request"].user
 
     for permission in user.get_all_permissions():
-        head, sep, tail = permission.partition(".")
-        perm = "{prefix}_{model}".format(
-            **{"prefix": PERMISSION_PREFIX, "model": model}
-        )
+        head, sep, tail = permission.partition(".")  # type: str, str, str
+        perm = f"{ settings.READ_ONLY_ADMIN_PERMISSION_PREFIX}_{model}"  # type: str
         if str(perm) == str(tail):
             if user.has_perm(str(permission)) and not user.is_superuser:
                 ctx.update(

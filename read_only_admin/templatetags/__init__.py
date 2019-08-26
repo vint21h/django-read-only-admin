@@ -4,4 +4,4 @@
 # read_only_admin/templatetags/__init__.py
 
 
-__all__ = []
+__all__ = []  # type: list

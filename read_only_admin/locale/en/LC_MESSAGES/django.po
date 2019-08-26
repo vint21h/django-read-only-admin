@@ -1,0 +1,29 @@
+# django-read-only-admin
+# xicon/locale/en/LC_MESSAGES/django.po
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: django-read-only-admin 0.2.0\n"
+"Report-Msgid-Bugs-To: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
+"POT-Creation-Date: 2019-08-26 16:48+0300\n"
+"PO-Revision-Date: 2019-08-26 16:48+0300\n"
+"Last-Translator: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
+"Language-Team: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+#: apps.py:17
+msgid "Django read only admin"
+msgstr "Django read only admin"
+
+#: templates/admin/pagination.html:14
+msgid "Show all"
+msgstr "Show all"
+
+#: templates/admin/pagination.html:15
+msgid "Save"
+msgstr "Save"

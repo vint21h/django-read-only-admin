@@ -4,7 +4,7 @@
 # read_only_admin/__init__.py
 
 
-__all__ = ["default_app_config"]
+__all__ = ["default_app_config"]  # type: list
 
 
-default_app_config = "read_only_admin.apps.Config"
+default_app_config = "read_only_admin.apps.DjangoReadOnlyAdminConfig"  # type: str
