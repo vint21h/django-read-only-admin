@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # django-read-only-admin
-# settings/settings.py
+# tests/settings.py
 
 
 import pathlib
@@ -33,8 +33,14 @@ TEMPLATES = [
 ]  # type: list
 
 
-# add nose test runner application and django-read-only-admin
-INSTALLED_APPS = ["django_nose", "read_only_admin"]  # type: list
+# add testing related apps
+INSTALLED_APPS = [
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django_nose",
+    "read_only_admin",
+]  # type: list
 
 # add nose test runner
 TEST_RUNNER = "django_nose.NoseTestSuiteRunner"  # type: str
