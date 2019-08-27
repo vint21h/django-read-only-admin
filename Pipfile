@@ -31,6 +31,3 @@ pygments = "==2.4.2"
 [packages]
 django = ">=2.0"
 django-appconf = ">=1.0.3"
-
-[requires]
-python_version = "3.6"
