@@ -32,7 +32,7 @@ def add_readonly_permissions(
     **kwargs,
 ) -> None:
     """
-    This migrate hooks takes care of adding a read only permission to all of your content types.
+    This migrate hooks takes care of adding a read only permission to all of your content types.  # noqa: E501
     Get from: https://github.com/anupamshakya7/django-admin-hack/.
 
     :param sender: installed application config instance,

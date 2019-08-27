@@ -51,9 +51,7 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-docstring-first
-      - id: check-json
       - id: check-yaml
-      - id: check-symlinks
       - id: check-toml
       - id: debug-statements
       - id: check-case-conflict

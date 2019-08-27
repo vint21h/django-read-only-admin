@@ -27,8 +27,8 @@ _HTML_UNESCAPES = {
 @register.filter()
 def unescape(value: str) -> str:
     """
-    Returns the ASCII decoded version of the given HTML string. This does NOT remove normal HTML tags like <p>.
-    Get from: https://stackoverflow.com/questions/275174/how-do-i-perform-html-decoding-encoding-using-python-django.
+    Returns the ASCII decoded version of the given HTML string. This does NOT remove normal HTML tags like <p>.  # noqa: E501
+    Get from: https://stackoverflow.com/questions/275174/how-do-i-perform-html-decoding-encoding-using-python-django.  # noqa: E501
 
     :param value: string wanted to decoded.
     :type value: str.
@@ -37,7 +37,7 @@ def unescape(value: str) -> str:
     """
 
     for code, char in _HTML_UNESCAPES.items():
-        value = value.replace(old=code, new=char)
+        value = value.replace(code, char)
 
     return value
 
@@ -46,7 +46,7 @@ def unescape(value: str) -> str:
 def readonly_submit_row(context: template.Context) -> template.Context:
     """
     Read only submit row templatetag.
-    Get from: http://anupamshakya.blogspot.com/2013/07/create-readonly-permission-for-all.html.
+    Get from: http://anupamshakya.blogspot.com/2013/07/create-readonly-permission-for-all.html.  # noqa: E501
 
     :param context: template context.
     :type context: django.template.Context.

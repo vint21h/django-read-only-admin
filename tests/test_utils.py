@@ -26,7 +26,7 @@ class GetReadOnlyPermissionCodenameUtilTest(TestCase):
 
     def test_get_read_only_permission_codename(self):
         """
-        Util must return model read only permission codename based on read only prefix setting.
+        Util must return model read only permission codename based on read only prefix setting.  # noqa: E501
         """
 
         self.assertEqual(
@@ -49,7 +49,7 @@ class GetReadOnlyPermissionNameUtilTest(TestCase):
 
     def test_get_read_only_permission_name(self):
         """
-        Util must return model read only permission name based on read only name prefix setting.
+        Util must return model read only permission name based on read only name prefix setting.  # noqa: E501
         """
 
         self.assertEqual(get_read_only_permission_name(model="user"), "Read only user")

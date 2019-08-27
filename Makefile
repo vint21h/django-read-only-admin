@@ -7,7 +7,7 @@ PHONY: tox test makemessages compilemessages bumpversion build check twine-check
 TEST_PYPI_URL=https://test.pypi.org/legacy/
 NAME=read_only_admin
 EXTENSIONS=py,html,txt
-TRASH=build dist django_$(NAME).egg-info .tox .mypy_cache
+TRASH=build dist *.egg-info .tox .mypy_cache .coverage coverage.xml Pipfile.lock
 BUILD_TYPES=bdist_wheel sdist
 VERSION=`python -c "import configparser; config = configparser.ConfigParser(); config.read('setup.cfg'); print(config['metadata']['version']);"`
 

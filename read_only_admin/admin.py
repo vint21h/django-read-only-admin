@@ -102,7 +102,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
 
     def get_changelist_formset(self, request, **kwargs):
         """
-        Empty FormSet class for use on the changelist page if list_editable and readonly permission is used.
+        Empty FormSet class for use on the changelist page if list_editable and readonly permission is used.  # noqa: E501
 
         :param request: django HTTP request object.
         :type request: django.http.request.HttpRequest.
@@ -183,7 +183,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
     def get_actions(self, request):
         """
         Get actions.
-        Get from: https://vinitkumar.me/articles/2014/05/18/Get-Readonly-Mode-IN-Django.html.
+        Get from: https://vinitkumar.me/articles/2014/05/18/Get-Readonly-Mode-IN-Django.html.  # noqa: E501
 
         :param request: django HTTP request object.
         :type request: django.http.request.HttpRequest.
