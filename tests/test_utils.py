@@ -60,4 +60,4 @@ class GetReadOnlyPermissionNameUtilTest(TestCase):
         Util must return model read only permission name based on read only name prefix setting with broken name prefix settings.  # noqa: E501
         """
 
-        self.assertEqual(get_read_only_permission_codename(model="user"), "user")
+        self.assertEqual(get_read_only_permission_name(model="user"), " user")
