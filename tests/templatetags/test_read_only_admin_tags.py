@@ -4,12 +4,20 @@
 # tests/templatetags/test_read_only_admin_tags.py
 
 
+from django.contrib.auth import get_user_model
+from django.template import Context
 from django.test import TestCase
 
-from read_only_admin.templatetags.read_only_admin_tags import unescape
+from read_only_admin.templatetags.read_only_admin_tags import (
+    unescape,
+    readonly_submit_row,
+)
 
 
 __all__ = ["UnescapeTemplatetagTest"]  # type: list
+
+
+User = get_user_model()
 
 
 class UnescapeTemplatetagTest(TestCase):
@@ -96,3 +104,65 @@ class UnescapeTemplatetagTest(TestCase):
         unescaped = "&"
 
         self.assertEqual(first=unescape(value=escaped), second=unescaped)
+
+
+class ReadonlySubmitRowTemplatetagTest(TestCase):
+    """
+    Read only submit row templatetag tests.
+    """
+
+    @classmethod
+    def setUpTestData(cls):
+        """
+        Set up non-modified objects used by all test methods.
+        """
+
+        User.objects.create(
+            username="test", email="test@example.com", password="super-secret-password"
+        )
+
+    def test_readonly_submit_row(self) -> None:
+        """
+        Test templatetag without.
+
+        :return: nothing.
+        :rtype: None.
+        """
+
+        context = Context()
+        context.update({"user": User.objects.first()})
+
+        # TODO: implement it!!1
+
+    def test_readonly_submit_row__without__read_only_permissions(self) -> None:
+        """
+        Test templatetag without read only permissions.
+
+        :return: nothing.
+        :rtype: None.
+        """
+
+        context = Context()
+        context.update({"user": User.objects.first()})
+
+        # TODO: implement it!!1
+
+    def test_readonly_submit_row__without__read_only_permissions__for_superuser(
+        self
+    ) -> None:
+        """
+        Test templatetag without read only permissions for superuser.
+
+        :return: nothing.
+        :rtype: None.
+        """
+
+        user = User.objects.first()
+        user.is_stuff = True
+        user.is_superuser = True
+        user.save(update_fields=["is_staff", "is_superuser"])
+
+        context = Context()
+        context.update({"user": user})
+
+        # TODO: implement it!!1
