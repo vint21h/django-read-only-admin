@@ -4,6 +4,7 @@
 # tests/test_signals.py
 
 
+from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.test import TestCase
 
@@ -21,4 +22,29 @@ class AddReadOnlyPermissionsSignalTest(TestCase):
         Test signal.
         """
 
-        self.assertQuerysetEqual(qs=Permission.objects.all(), values=[])
+        self.assertListEqual(
+            list1=list(
+                Permission.objects.filter(
+                    codename__startswith=settings.READONLY_ADMIN_PERMISSION_PREFIX
+                ).values_list("codename", flat=True)
+            ),
+            list2=[
+                "readonly_logentry",
+                "readonly_group",
+                "readonly_permission",
+                "readonly_user",
+                "readonly_contenttype",
+            ],
+        )
+
+    def test_add_readonly_permissions__count(self):
+        """
+        Test signal create new permissions number.
+        """
+
+        self.assertEqual(
+            first=Permission.objects.filter(
+                codename__startswith=settings.READONLY_ADMIN_PERMISSION_PREFIX
+            ).count(),
+            second=5,
+        )

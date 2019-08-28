@@ -121,9 +121,9 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
             username="test", email="test@example.com", password="super-secret-password"
         )
 
-    def test_readonly_submit_row(self) -> None:
+    def test_readonly_submit_row__return_context(self) -> None:
         """
-        Test templatetag without.
+        Test templatetag return context.
 
         :return: nothing.
         :rtype: None.
@@ -132,7 +132,47 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
         context = Context()
         context.update({"user": User.objects.first()})
 
-        # TODO: implement it!!1
+        self.assertIsInstance(obj=readonly_submit_row(context=context), cls=Context)
+
+    def test_readonly_submit_row(self) -> None:
+        """
+        Test templatetag.
+
+        :return: nothing.
+        :rtype: None.
+        """
+
+        context = Context()
+        context.update({"user": User.objects.first()})
+
+        self.assertFalse(expr=readonly_submit_row(context=context)["show_delete_link"])
+        self.assertFalse(
+            expr=readonly_submit_row(context=context)["show_save_and_add_another"]
+        )
+        self.assertFalse(
+            expr=readonly_submit_row(context=context)["show_save_and_continue"]
+        )
+        self.assertFalse(expr=readonly_submit_row(context=context)["show_save"])
+
+    def test_readonly_submit_row__for_superuser(self) -> None:
+        """
+        Test templatetag for superuser.
+
+        :return: nothing.
+        :rtype: None.
+        """
+
+        context = Context()
+        context.update({"user": User.objects.first()})
+
+        self.assertTrue(expr=readonly_submit_row(context=context)["show_delete_link"])
+        self.assertTrue(
+            expr=readonly_submit_row(context=context)["show_save_and_add_another"]
+        )
+        self.assertTrue(
+            expr=readonly_submit_row(context=context)["show_save_and_continue"]
+        )
+        self.assertTrue(expr=readonly_submit_row(context=context)["show_save"])
 
     def test_readonly_submit_row__without__read_only_permissions(self) -> None:
         """
@@ -165,4 +205,11 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
         context = Context()
         context.update({"user": user})
 
-        # TODO: implement it!!1
+        self.assertTrue(expr=readonly_submit_row(context=context)["show_delete_link"])
+        self.assertTrue(
+            expr=readonly_submit_row(context=context)["show_save_and_add_another"]
+        )
+        self.assertTrue(
+            expr=readonly_submit_row(context=context)["show_save_and_continue"]
+        )
+        self.assertTrue(expr=readonly_submit_row(context=context)["show_save"])
