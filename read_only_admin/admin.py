@@ -3,16 +3,18 @@
 # django-read-only-admin
 # read_only_admin/admin.py
 
-from __future__ import unicode_literals
 
 from collections import OrderedDict
 from functools import partial
+from typing import Union, Iterable
 
 from django.contrib import admin
 from django.contrib.admin.utils import flatten_fieldsets
 from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth import get_permission_codename
+from django.db import models
 from django.forms.models import modelformset_factory
+from django.http import HttpRequest
 
 from read_only_admin.conf import settings
 from read_only_admin.utils import get_read_only_permission_codename
@@ -27,28 +29,55 @@ __all__ = [
 
 class ReadonlyChangeList(ChangeList):
     """
-    Readonly change list.
+    Readonly admin change list.
     """
 
     def __init__(
         self,
-        request,
-        model,
-        list_display,
-        list_display_links,
-        list_filter,
-        date_hierarchy,
-        search_fields,
-        list_select_related,
-        list_per_page,
-        list_max_show_all,
-        list_editable,
-        model_admin,
-        sortable_by,
-    ):
+        request: HttpRequest,
+        model: models.Model,
+        list_display: Iterable,
+        list_display_links: Iterable,
+        list_filter: Iterable,
+        date_hierarchy: str,
+        search_fields: Iterable,
+        list_select_related: Union[bool, Iterable],
+        list_per_page: int,
+        list_max_show_all: int,
+        list_editable: Iterable,
+        model_admin: admin.ModelAdmin,
+        sortable_by: Iterable,
+    ) -> None:
         """
-        Override to set extra readonly property.
-        """
+        Overridden to set extra readonly property.
+
+        :param request: django HTTP request object.
+        :type request: django.http.HttpRequest.
+        :param model: django related model instance.
+        :type model: django.db.models.Model.
+        :param list_display: list of fields to dis[lay.
+        :type list_display: Iterable.
+        :param list_display_links: list of fields to display as links.
+        :type list_display_links: Iterable.
+        :param list_filter: list of fields by which can be filtering do.
+        :type list_filter: Iterable.
+        :param date_hierarchy: generate date hierarchy for field name.
+        :type date_hierarchy: str.
+        :param search_fields: list of fields by which can be search do.
+        :type search_fields: Iterable.
+        :param list_select_related:
+        :type list_select_related: Union[bool, Iterable].
+        :param list_per_page: items on page number.
+        :type list_per_page: int.
+        :param list_max_show_all:  how many items can appear on a show all change list page.
+        :type list_max_show_all: int.
+        :param list_editable: list of inline editable fields.
+        :type list_editable: Iterable.
+        :param model_admin: django related admin instance.
+        :type model_admin: django.contrib.admin.ModelAdmin.
+        :param sortable_by: brute enable/disable sorting for list of fields.
+        :type sortable_by: Iterable.
+        """  # noqa: E501
 
         super(ReadonlyChangeList, self).__init__(
             request=request,
