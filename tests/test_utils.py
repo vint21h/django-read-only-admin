@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 # django-read-only-admin
-# settings/tests.py
+# tests/test_utils.py
 
 
 from django.test import TestCase
