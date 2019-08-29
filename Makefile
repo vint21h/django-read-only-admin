@@ -53,7 +53,7 @@ clean:
 
 help:
 	@echo "    help:"
-	@echo "        Show whis help."
+	@echo "        Show this help."
 	@echo "    tox:"
 	@echo "        Run tox."
 	@echo "    test:"
