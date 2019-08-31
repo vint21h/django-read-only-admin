@@ -128,7 +128,7 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
         user = User.objects.create(
             username="test",
             email="test@example.com",
-            password="super-secret-password",
+            password=User.objects.make_random_password(),
             is_staff=True,
         )
         user.user_permissions.add(*list(Permission.objects.all()))
