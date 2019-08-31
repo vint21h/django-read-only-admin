@@ -1,6 +1,7 @@
 .. django-read-only-admin
 .. README.rst
 
+
 A django-read-only-admin documentation
 ======================================
 
@@ -108,7 +109,6 @@ For other authors list see AUTHORS file.
 .. _Coverage: https://www.codacy.com/app/vint21h/django-read-only-admin
 .. _Codacy: https://www.codacy.com/app/vint21h/django-read-only-admin
 .. _Requires: https://requires.io/github/vint21h/django-read-only-admin/requirements/?branch=master
-.. _PyPy: https://pypi.org/project/django-read-only-admin/
 .. _pypi-license: https://pypi.org/project/django-read-only-admin/
 .. _pypi-version: https://pypi.org/project/django-read-only-admin/
 .. _pypi-django-version: https://pypi.org/project/django-read-only-admin/

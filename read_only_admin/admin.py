@@ -120,9 +120,9 @@ class ReadonlyAdmin(admin.ModelAdmin):
 
     change_form_template = "read_only_admin/change_form.html"
 
-    def get_changelist(
+    def get_changelist(  # pylint: disable=R0201
         self, request: HttpRequest, **kwargs: Dict[str, Any]
-    ) -> object:  # pylint: disable=R0201
+    ) -> object:
         """
         Returns the ReadonlyChangeList class for use on the changelist page.
 
@@ -195,9 +195,9 @@ class ReadonlyAdmin(admin.ModelAdmin):
         """
 
         for permission in request.user.get_all_permissions():
-            head, sep, tail = permission.partition(
+            head, sep, tail = permission.partition(  # pylint: disable=W0612
                 "."
-            )  # pylint: disable=W0612, type: str, str, str
+            )  # type: str, str, str
             if (
                 get_read_only_permission_codename(model=self.model.__name__.lower())
                 == tail  # noqa: W503
