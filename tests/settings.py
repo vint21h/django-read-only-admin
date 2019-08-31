@@ -6,6 +6,7 @@
 
 import pathlib
 import sys
+from typing import Dict, List, Union  # pylint: disable=W0611
 
 
 # black magic to use imports from library code
@@ -20,7 +21,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": "django-read-only-admin-tests.sqlite3",
     }
-}  # type: dict
+}  # type: Dict[str, Dict[str, str]]
 
 # configure templates
 TEMPLATES = [
@@ -30,7 +31,7 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {},
     }
-]  # type: list
+]  # type: List[Dict[str, Union[str, List[str], bool, Dict[str, str]]]]
 
 
 # add testing related apps
@@ -40,7 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django_nose",
     "read_only_admin",
-]  # type: list
+]  # type: List[str]
 
 # add nose test runner
 TEST_RUNNER = "django_nose.NoseTestSuiteRunner"  # type: str
@@ -56,7 +57,7 @@ NOSE_ARGS = [
     "--cover-erase",
     "--cover-package=read_only_admin",
     "--logging-clear-handlers",
-]  # type: list
+]  # type: List[str]
 
 # configure urls
 ROOT_URLCONF = "read_only_admin.urls"  # type: str

@@ -4,7 +4,7 @@
 # read_only_admin/signals.py
 
 
-from typing import Union, Iterable
+from typing import List, Union, Iterable  # pylint: disable=W0611
 
 from django.apps import AppConfig
 from django.contrib.auth.models import Permission
@@ -17,7 +17,7 @@ from read_only_admin.utils import (
 )
 
 
-__all__ = ["add_readonly_permissions"]  # type: list
+__all__ = ["add_readonly_permissions"]  # type: List[str]
 
 
 def add_readonly_permissions(
@@ -26,8 +26,8 @@ def add_readonly_permissions(
     verbosity: int = 1,
     interactive: bool = False,
     using: str = DEFAULT_DB_ALIAS,
-    plan: Union[Iterable, None] = None,
-    apps: Union[Iterable, None] = None,
+    plan: Union[Iterable[str], None] = None,
+    apps: Union[Iterable[str], None] = None,
     *args,
     **kwargs,
 ) -> None:
@@ -46,9 +46,9 @@ def add_readonly_permissions(
     :param using: db name.
     :type using: str.
     :param plan: migration plan.
-    :type plan: Union[Iterable, None].
+    :type plan: Union[Iterable[str], None].
     :param apps:
-    :type apps: Union[Iterable, None].
+    :type apps: Union[Iterable[str], None].
     :param args: additional arguments.
     :type args: list.
     :param kwargs: additional arguments.

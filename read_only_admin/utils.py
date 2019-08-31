@@ -4,13 +4,15 @@
 # read_only_admin/utils.py
 
 
+from typing import List  # pylint: disable=W0611
+
 from read_only_admin.conf import settings
 
 
 __all__ = [
     "get_read_only_permission_codename",
     "get_read_only_permission_name",
-]  # type: list
+]  # type: List[str]
 
 
 def get_read_only_permission_codename(model: str) -> str:

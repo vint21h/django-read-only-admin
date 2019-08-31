@@ -4,6 +4,8 @@
 # tests/templatetags/test_read_only_admin_tags.py
 
 
+from typing import List  # pylint: disable=W0611
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.http import HttpRequest
@@ -17,7 +19,10 @@ from read_only_admin.templatetags.read_only_admin_tags import (
 )
 
 
-__all__ = ["UnescapeTemplatetagTest", "ReadonlySubmitRowTemplatetagTest"]  # type: list
+__all__ = [
+    "UnescapeTemplatetagTest",
+    "ReadonlySubmitRowTemplatetagTest",
+]  # type: List[str]
 
 
 User = get_user_model()
@@ -36,10 +41,10 @@ class UnescapeTemplatetagTest(TestCase):
         :rtype: None.
         """
 
-        escaped = """&lt;script type=&quot;text/javascript&quot;&gt;alert(&#39;PWND &amp; HACKD!!1&#39;)&lt;/script&gt;"""  # noqa: E501
+        escaped = """&lt;script type=&quot;text/javascript&quot;&gt;alert(&#39;PWND &amp; HACKD!!1&#39;)&lt;/script&gt;"""  # noqa: E501, type: str
         unescaped = (
             """<script type="text/javascript">alert('PWND & HACKD!!1')</script>"""
-        )
+        )  # noqa: E501, type: str
 
         self.assertEqual(first=unescape(value=escaped), second=unescaped)
 
@@ -51,8 +56,8 @@ class UnescapeTemplatetagTest(TestCase):
         :rtype: None.
         """
 
-        escaped = "&#39;"
-        unescaped = "'"
+        escaped = "&#39;"  # type: str
+        unescaped = "'"  # type: str
 
         self.assertEqual(first=unescape(value=escaped), second=unescaped)
 
@@ -64,8 +69,8 @@ class UnescapeTemplatetagTest(TestCase):
         :rtype: None.
         """
 
-        escaped = "&quot;"
-        unescaped = '"'
+        escaped = "&quot;"  # type: str
+        unescaped = '"'  # type: str
 
         self.assertEqual(first=unescape(value=escaped), second=unescaped)
 
@@ -77,8 +82,8 @@ class UnescapeTemplatetagTest(TestCase):
         :rtype: None.
         """
 
-        escaped = "&lt;"
-        unescaped = "<"
+        escaped = "&lt;"  # type: str
+        unescaped = "<"  # type: str
 
         self.assertEqual(first=unescape(value=escaped), second=unescaped)
 
@@ -90,8 +95,8 @@ class UnescapeTemplatetagTest(TestCase):
         :rtype: None.
         """
 
-        escaped = "&gt;"
-        unescaped = ">"
+        escaped = "&gt;"  # type: str
+        unescaped = ">"  # type: str
 
         self.assertEqual(first=unescape(value=escaped), second=unescaped)
 
@@ -103,8 +108,8 @@ class UnescapeTemplatetagTest(TestCase):
         :rtype: None.
         """
 
-        escaped = "&amp;"
-        unescaped = "&"
+        escaped = "&amp;"  # type: str
+        unescaped = "&"  # type: str
 
         self.assertEqual(first=unescape(value=escaped), second=unescaped)
 
@@ -138,7 +143,7 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
         """
 
         user = User.objects.first()
-        request = HttpRequest()
+        request = HttpRequest()  # type: HttpRequest
         request.user = user
         context = Context(
             {
@@ -155,8 +160,8 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
                 "opts": "auth.user",
                 "request": request,
             }
-        )
-        result = readonly_submit_row(context=context)
+        )  # type: Context
+        result = readonly_submit_row(context=context)  # type: Context
 
         self.assertIsInstance(obj=result, cls=Context)
 
@@ -169,7 +174,7 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
         """
 
         user = User.objects.first()
-        request = HttpRequest()
+        request = HttpRequest()  # type: HttpRequest
         request.user = user
         context = Context(
             {
@@ -186,8 +191,8 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
                 "opts": "auth.user",
                 "request": request,
             }
-        )
-        result = readonly_submit_row(context=context)
+        )  # type: Context
+        result = readonly_submit_row(context=context)  # type: Context
 
         self.assertFalse(expr=result["show_delete_link"])
         self.assertFalse(expr=result["show_save_and_add_another"])
@@ -205,7 +210,7 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
         user = User.objects.first()
         user.is_superuser = True
         user.save(update_fields=["is_superuser"])
-        request = HttpRequest()
+        request = HttpRequest()  # type: HttpRequest
         request.user = user
         context = Context(
             {
@@ -222,8 +227,8 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
                 "opts": "auth.user",
                 "request": request,
             }
-        )
-        result = readonly_submit_row(context=context)
+        )  # type: Context
+        result = readonly_submit_row(context=context)  # type: Context
 
         self.assertTrue(expr=result["show_delete_link"])
         self.assertTrue(expr=result["show_save_and_add_another"])
@@ -241,8 +246,9 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
         Permission.objects.filter(
             codename__startswith=settings.READONLY_ADMIN_PERMISSION_PREFIX
         ).delete()
+
         user = User.objects.first()
-        request = HttpRequest()
+        request = HttpRequest()  # type: HttpRequest
         request.user = user
         context = Context(
             {
@@ -259,8 +265,8 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
                 "opts": "auth.user",
                 "request": request,
             }
-        )
-        result = readonly_submit_row(context=context)
+        )  # type: Context
+        result = readonly_submit_row(context=context)  # type: Context
 
         self.assertTrue(expr=result["show_delete_link"])
         self.assertTrue(expr=result["show_save_and_add_another"])
@@ -280,7 +286,7 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
         user = User.objects.first()
         user.is_superuser = True
         user.save(update_fields=["is_superuser"])
-        request = HttpRequest()
+        request = HttpRequest()  # type: HttpRequest
         request.user = user
         context = Context(
             {
@@ -297,8 +303,8 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
                 "opts": "auth.user",
                 "request": request,
             }
-        )
-        result = readonly_submit_row(context=context)
+        )  # type: Context
+        result = readonly_submit_row(context=context)  # type: Context
 
         self.assertTrue(expr=result["show_delete_link"])
         self.assertTrue(expr=result["show_save_and_add_another"])

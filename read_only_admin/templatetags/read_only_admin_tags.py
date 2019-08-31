@@ -4,13 +4,15 @@
 # read_only_admin/templatetags/read_only_admin_tags.py
 
 
+from typing import Dict, List  # pylint: disable=W0611
+
 from django import template
 from django.contrib.admin.templatetags.admin_modify import submit_row
 
 from read_only_admin.utils import get_read_only_permission_codename
 
 
-__all__ = ["unescape", "readonly_submit_row"]  # type: list
+__all__ = ["unescape", "readonly_submit_row"]  # type: List[str]
 
 
 register = template.Library()
@@ -21,7 +23,7 @@ _HTML_UNESCAPES = {
     "&gt;": ">",
     "&lt;": "<",
     "&amp;": "&",
-}  # type: dict
+}  # type: Dict[str, str]
 
 
 @register.filter()

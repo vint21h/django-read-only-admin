@@ -6,7 +6,7 @@
 
 from collections import OrderedDict
 from functools import partial
-from typing import Union, Iterable
+from typing import List, Union, Iterable  # pylint: disable=W0611
 
 from django.contrib import admin
 from django.contrib.admin.utils import flatten_fieldsets
@@ -24,7 +24,7 @@ __all__ = [
     "ReadonlyAdmin",
     "ReadonlyStackedInline",
     "ReadonlyTabularInline",
-]  # type: list
+]  # type: List[str]
 
 
 class ReadonlyChangeList(ChangeList):
@@ -36,17 +36,17 @@ class ReadonlyChangeList(ChangeList):
         self,
         request: HttpRequest,
         model: models.Model,
-        list_display: Iterable,
-        list_display_links: Iterable,
-        list_filter: Iterable,
+        list_display: Iterable[str],
+        list_display_links: Iterable[str],
+        list_filter: Iterable[str],
         date_hierarchy: str,
-        search_fields: Iterable,
-        list_select_related: Union[bool, Iterable],
+        search_fields: Iterable[str],
+        list_select_related: Union[bool, Iterable[str]],
         list_per_page: int,
         list_max_show_all: int,
-        list_editable: Iterable,
+        list_editable: Iterable[str],
         model_admin: admin.ModelAdmin,
-        sortable_by: Iterable,
+        sortable_by: Iterable[str],
     ) -> None:
         """
         Overridden to set extra readonly property.

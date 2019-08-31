@@ -4,12 +4,14 @@
 # tests/test_signals.py
 
 
+from typing import List  # pylint: disable=W0611
+
 from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.test import TestCase
 
 
-__all__ = ["AddReadOnlyPermissionsSignalTest"]  # type: list
+__all__ = ["AddReadOnlyPermissionsSignalTest"]  # type: List[str]
 
 
 class AddReadOnlyPermissionsSignalTest(TestCase):

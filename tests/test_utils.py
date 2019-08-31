@@ -4,6 +4,8 @@
 # tests/test_utils.py
 
 
+from typing import List  # pylint: disable=W0611
+
 from django.test import TestCase
 from django.test.utils import override_settings
 
@@ -16,7 +18,7 @@ from read_only_admin.utils import (
 __all__ = [
     "GetReadOnlyPermissionCodenameUtilTest",
     "GetReadOnlyPermissionNameUtilTest",
-]  # type: list
+]  # type: List[str]
 
 
 class GetReadOnlyPermissionCodenameUtilTest(TestCase):
