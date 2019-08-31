@@ -57,11 +57,15 @@ def readonly_submit_row(context: template.Context) -> template.Context:
     """
 
     ctx = submit_row(context=context)  # type: template.Context
-    app, separator, model = context["opts"].partition(".")  # type: str, str, str
+    app, separator, model = context["opts"].partition(
+        "."
+    )  # pylint: disable=W0612, type: str, str, str
     user = context["request"].user
 
     for permission in user.get_all_permissions():
-        head, sep, tail = permission.partition(".")  # type: str, str, str
+        head, sep, tail = permission.partition(
+            "."
+        )  # pylint: disable=W0612, type: str, str, str
         if get_read_only_permission_codename(model=model) == tail:
             if user.has_perm(permission) and not user.is_superuser:
                 ctx.update(

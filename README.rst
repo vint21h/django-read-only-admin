@@ -4,7 +4,7 @@
 A django-read-only-admin documentation
 ======================================
 
-|Travis|_ |Coverage|_ |Codacy|_ |Requires|_ |pypi-license| |pypi-version| |pypi-python-version| |pypi-django-version| |pypi-format| |pypi-wheel| |pypi-status|
+|Travis|_ |Coverage|_ |Codacy|_ |Requires|_ |pypi-license|_ |pypi-version|_ |pypi-python-version|_ |pypi-django-version|_ |pypi-format|_ |pypi-wheel|_ |pypi-status|_
 
     *django-read-only-admin is a django reusable application that fully implement read only admin*
 
@@ -108,3 +108,11 @@ For other authors list see AUTHORS file.
 .. _Coverage: https://www.codacy.com/app/vint21h/django-read-only-admin
 .. _Codacy: https://www.codacy.com/app/vint21h/django-read-only-admin
 .. _Requires: https://requires.io/github/vint21h/django-read-only-admin/requirements/?branch=master
+.. _PyPy: https://pypi.org/project/django-read-only-admin/
+.. _pypi-license: https://pypi.org/project/django-read-only-admin/
+.. _pypi-version: https://pypi.org/project/django-read-only-admin/
+.. _pypi-django-version: https://pypi.org/project/django-read-only-admin/
+.. _pypi-python-version: https://pypi.org/project/django-read-only-admin/
+.. _pypi-format: https://pypi.org/project/django-read-only-admin/
+.. _pypi-wheel: https://pypi.org/project/django-read-only-admin/
+.. _pypi-status: https://pypi.org/project/django-read-only-admin/

@@ -6,13 +6,22 @@
 
 from collections import OrderedDict
 from functools import partial
-from typing import List, Union, Iterable  # pylint: disable=W0611
+from typing import (  # pylint: disable=W0611
+    Any,
+    Dict,
+    List,
+    Union,
+    Mapping,
+    Callable,
+    Iterable,
+)
 
 from django.contrib import admin
 from django.contrib.admin.utils import flatten_fieldsets
 from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth import get_permission_codename
 from django.db import models
+from django.forms.formsets import BaseFormSet
 from django.forms.models import modelformset_factory
 from django.http import HttpRequest
 
@@ -117,24 +126,32 @@ class ReadonlyAdmin(admin.ModelAdmin):
 
     change_form_template = "read_only_admin/change_form.html"
 
-    def get_changelist(self, request, **kwargs):
+    def get_changelist(
+        self, request: HttpRequest, **kwargs: Dict[str, Any]
+    ) -> object:  # pylint: disable=R0201
         """
         Returns the ReadonlyChangeList class for use on the changelist page.
 
         :param request: django HTTP request object.
         :type request: django.http.request.HttpRequest.
+        :param kwargs: additional args.
+        :type kwargs: Dict[str, Any].
         :return: readonly change list.
         :rtype: read_only_admin.admin.ReadonlyChangeList.
         """
 
         return ReadonlyChangeList
 
-    def get_changelist_formset(self, request, **kwargs):
+    def get_changelist_formset(
+        self, request: HttpRequest, **kwargs: Dict[str, Any]
+    ) -> BaseFormSet:
         """
         Empty FormSet class for use on the changelist page if list_editable and readonly permission is used.  # noqa: E501
 
         :param request: django HTTP request object.
         :type request: django.http.request.HttpRequest.
+        :param kwargs: additional args.
+        :type kwargs: Dict[str, Any].
         :return: FormSet for changelist.
         :rtype: django.forms.formsets.BaseFormSet.
         """
@@ -154,7 +171,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
                             self.formfield_for_dbfield, request=request
                         )
                     }
-                    defaults.update(kwargs)
+                    defaults.update(kwargs)  # type: ignore
 
                     return modelformset_factory(
                         self.model,
@@ -168,7 +185,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
             request=request, **kwargs
         )
 
-    def get_readonly_fields(self, request, obj=None):
+    def get_readonly_fields(self, request: HttpRequest, obj=None) -> List[str]:
         """
         Get readonly fields.
         Get from: https://github.com/anupamshakya7/django-admin-hack/.
@@ -178,7 +195,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
         :param obj: an object.
         :type obj: django.db.models.Model.
         :return: readonly fields.
-        :rtype: list.
+        :rtype: List[str].
         """
 
         for permission in request.user.get_all_permissions():
@@ -209,7 +226,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
 
         return self.readonly_fields
 
-    def get_actions(self, request):
+    def get_actions(self, request: HttpRequest) -> OrderedDict[str, Callable]:
         """
         Get actions.
         Get from: https://vinitkumar.me/articles/2014/05/18/Get-Readonly-Mode-IN-Django.html.  # noqa: E501
@@ -217,7 +234,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
         :param request: django HTTP request object.
         :type request: django.http.request.HttpRequest.
         :return: admin actions.
-        :rtype: OrderedDict
+        :rtype: OrderedDict.
         """
 
         actions = super(ReadonlyAdmin, self).get_actions(request)
@@ -244,9 +261,10 @@ class ReadonlyInline(admin.TabularInline):
     Readonly admin inline.
     """
 
-    def has_add_permission(self, request, obj=None):
+    def has_add_permission(self, request: HttpRequest, obj=None) -> bool:
         """
-        Override for custom readonly permission.
+        Overridden for custom readonly permission.
+
         :param request: django HTTP request object.
         :type request: django.http.request.HttpRequest.
         :param obj: an object.
@@ -263,7 +281,9 @@ class ReadonlyInline(admin.TabularInline):
             return self.has_change_permission(request, obj)
 
         for permission in request.user.get_all_permissions():
-            head, sep, tail = permission.partition(".")  # type: str, str, str
+            head, sep, tail = permission.partition(
+                "."
+            )  # pylint: disable=W0612, type: str, str, str
             if (
                 get_read_only_permission_codename(model=self.model.__name__.lower())
                 == tail  # noqa: W503
@@ -279,9 +299,10 @@ class ReadonlyInline(admin.TabularInline):
 
         return request.user.has_perm("%s.%s" % (self.opts.app_label, codename))
 
-    def has_delete_permission(self, request, obj=None):
+    def has_delete_permission(self, request, obj=None) -> bool:
         """
-        Override for custom readonly permission.
+        Overridden for custom readonly permission.
+
         :param request: django HTTP request object.
         :type request: django.http.request.HttpRequest.
         :param obj: an object.
@@ -298,7 +319,9 @@ class ReadonlyInline(admin.TabularInline):
             return self.has_change_permission(request, obj)
 
         for permission in request.user.get_all_permissions():
-            head, sep, tail = permission.partition(".")  # type: str, str, str
+            head, sep, tail = permission.partition(
+                "."
+            )  # pylint: disable=W0612, type: str, str, str
             if (
                 get_read_only_permission_codename(model=self.model.__name__.lower())
                 == tail  # noqa: W503
@@ -314,7 +337,7 @@ class ReadonlyInline(admin.TabularInline):
 
         return request.user.has_perm("%s.%s" % (self.opts.app_label, codename))
 
-    def get_readonly_fields(self, request, obj=None):
+    def get_readonly_fields(self, request, obj=None) -> List[str]:
         """
         Get readonly fields.
         Get from: https://github.com/anupamshakya7/django-admin-hack/.
@@ -355,7 +378,7 @@ class ReadonlyStackedInline(ReadonlyInline):
     Stacked readonly inline.
     """
 
-    template = "admin/edit_inline/stacked.html"
+    template = "admin/edit_inline/stacked.html"  # type: str
 
 
 class ReadonlyTabularInline(ReadonlyInline):
@@ -363,4 +386,4 @@ class ReadonlyTabularInline(ReadonlyInline):
     Tabular readonly inline.
     """
 
-    template = "admin/edit_inline/tabular.html"
+    template = "admin/edit_inline/tabular.html"  # type: str
