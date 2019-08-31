@@ -57,9 +57,9 @@ def readonly_submit_row(context: template.Context) -> template.Context:
     """
 
     ctx = submit_row(context=context)  # type: template.Context
-    app, separator, model = context["opts"].partition(
+    app, separator, model = context["opts"].partition(  # pylint: disable=W0612
         "."
-    )  # pylint: disable=W0612, type: str, str, str
+    )  # type: str, str, str
     user = context["request"].user
 
     for permission in user.get_all_permissions():
