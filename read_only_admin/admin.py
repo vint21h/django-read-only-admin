@@ -99,9 +99,9 @@ class ReadonlyChangeList(ChangeList):
         self.readonly = False
 
         for permission in request.user.get_all_permissions():
-            head, sep, tail = permission.partition(
+            head, sep, tail = permission.partition(  # pylint: disable=W0612
                 "."
-            )  # pylint: disable=W0612, type: str, str, str
+            )  # type: str, str, str
             if (
                 get_read_only_permission_codename(model=self.model.__name__.lower())
                 == tail  # noqa: W503
