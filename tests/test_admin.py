@@ -20,11 +20,7 @@ from django.test.utils import override_settings
 from read_only_admin.admin import ReadonlyAdmin, ReadonlyChangeList
 
 
-__all__ = [
-    "ReadonlyAdminTest",
-    "ReadonlyChangeListTest",
-    "ReadonlyInlineTest",
-]  # type: List[str]
+__all__ = ["ReadonlyAdminTest", "ReadonlyChangeListTest"]  # type: List[str]
 
 
 User = get_user_model()
@@ -301,24 +297,3 @@ class ReadonlyAdminTest(TestCase):
         )  # type: OrderedDict[str, Any]
 
         self.assertDictEqual(d1=result, d2=expected)
-
-
-class ReadonlyInlineTest(TestCase):
-    """
-    Read only inline tests.
-    """
-
-    @classmethod
-    def setUpTestData(cls):
-        """
-        Set up non-modified objects used by all test methods.
-        """
-
-        user = User.objects.create(
-            username="test",
-            email="test@example.com",
-            password=User.objects.make_random_password(),
-            is_staff=True,
-        )
-        user.user_permissions.add(*list(Permission.objects.all()))
-        user.save()

@@ -3,6 +3,7 @@
 # django-read-only-admin
 # tests/__init__.py
 
+
 from typing import List  # pylint: disable=W0611
 
 
