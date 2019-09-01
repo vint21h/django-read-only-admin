@@ -6,7 +6,7 @@
 
 from collections import OrderedDict
 from functools import partial
-from typing import Any, Dict, List, Union, Iterable  # pylint: disable=W0611
+from typing import Any, Dict, List, Type, Union, Iterable  # pylint: disable=W0611
 
 from django.contrib import admin
 from django.contrib.admin.utils import flatten_fieldsets
@@ -122,7 +122,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
 
     def get_changelist(  # pylint: disable=R0201
         self, request: HttpRequest, **kwargs: Dict[str, Any]
-    ) -> object:
+    ) -> Type[ReadonlyChangeList]:
         """
         Returns the ReadonlyChangeList class for use on the changelist page.
 
