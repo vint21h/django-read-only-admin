@@ -224,7 +224,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
 
         return self.readonly_fields
 
-    def get_actions(self, request: HttpRequest) -> OrderedDict[str, str]:
+    def get_actions(self, request: HttpRequest) -> "OrderedDict[str, str]":
         """
         Get actions.
         Get from: https://vinitkumar.me/articles/2014/05/18/Get-Readonly-Mode-IN-Django.html.  # noqa: E501

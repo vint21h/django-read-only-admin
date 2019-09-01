@@ -35,7 +35,7 @@ class ReadOnlyUserAdmin(UserAdmin, ReadonlyAdmin):
 # unregister default admin class
 admin.site.unregister(User)
 # register read only admin class
-admin.site.reregister(User, ReadOnlyUserAdmin)
+admin.site.register(User, ReadOnlyUserAdmin)
 
 
 class ReadonlyAdminTest(TestCase):
