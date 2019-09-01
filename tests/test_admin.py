@@ -4,14 +4,18 @@
 # tests/test_admin.py
 
 
-from typing import List, Type  # pylint: disable=W0611
+from collections import OrderedDict
+from typing import Any, List, Type, Iterable  # pylint: disable=W0611
 
+from django.contrib.admin.actions import delete_selected
 from django.contrib.admin.sites import AdminSite
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Permission
+from django.forms.formsets import BaseFormSet
 from django.http import HttpRequest
 from django.test import TestCase
+from django.test.utils import override_settings
 
 from read_only_admin.admin import ReadonlyAdmin, ReadonlyChangeList
 
@@ -115,3 +119,181 @@ class ReadonlyAdminTest(TestCase):
         )  # type: Type[ReadonlyChangeList]
 
         self.assertEqual(first=result, second=ReadonlyChangeList)
+
+    def test_get_changelist_formset(self) -> None:
+        """
+        Method must return change list form set.
+
+        :return: nothing.
+        :rtype: None.
+        """
+
+        request = HttpRequest()  # type: HttpRequest
+        request.user = User.objects.first()
+        result = ReadOnlyUserAdmin(
+            model=get_user_model(), admin_site=AdminSite()
+        ).get_changelist_formset(
+            request=request
+        )  # type: BaseFormSet
+
+        self.assertEqual(first=result.__name__, second="UserFormFormSet")
+
+    def test_get_readonly_fields(self) -> None:
+        """
+        Method must return all form fields as read only.
+
+        :return: nothing.
+        :rtype: None.
+        """
+
+        user = User.objects.first()
+        request = HttpRequest()  # type: HttpRequest
+        request.user = user
+        result = ReadOnlyUserAdmin(
+            model=get_user_model(), admin_site=AdminSite()
+        ).get_readonly_fields(
+            request=request, obj=user
+        )  # type: Iterable[str]
+        expected = [
+            "username",
+            "password",
+            "first_name",
+            "last_name",
+            "email",
+            "is_active",
+            "is_staff",
+            "is_superuser",
+            "groups",
+            "user_permissions",
+            "last_login",
+            "date_joined",
+        ]  # type: List[str]
+
+        self.assertListEqual(list1=result, list2=expected)
+
+    def test_get_actions(self) -> None:
+        """
+        Method must return empty actions list.
+
+        :return: nothing.
+        :rtype: None.
+        """
+
+        user = User.objects.first()
+        request = HttpRequest()  # type: HttpRequest
+        request.user = user
+        result = ReadOnlyUserAdmin(
+            model=get_user_model(), admin_site=AdminSite()
+        ).get_actions(
+            request=request
+        )  # type: OrderedDict[str, Any]
+
+        self.assertDictEqual(d1=result, d2=OrderedDict())
+
+    @override_settings(READONLY_ADMIN_EMPTY_ACTIONS=False)
+    def test_get_actions__without_empty_actions(self) -> None:
+        """
+        Method must return actions list resolved by available permissions.
+
+        :return: nothing.
+        :rtype: None.
+        """
+
+        user = User.objects.first()
+        request = HttpRequest()  # type: HttpRequest
+        request.user = user
+        result = ReadOnlyUserAdmin(
+            model=get_user_model(), admin_site=AdminSite()
+        ).get_actions(
+            request=request
+        )  # type: OrderedDict[str, Any]
+
+        self.assertDictEqual(d1=result, d2=OrderedDict())
+
+    def test_get_readonly_fields__for_superuser(self) -> None:
+        """
+        Method must return empty read only fields for super user.
+
+        :return: nothing.
+        :rtype: None.
+        """
+
+        user = User.objects.first()
+        user.is_superuser = True
+        user.save(update_fields=["is_superuser"])
+        request = HttpRequest()  # type: HttpRequest
+        request.user = user
+        result = ReadOnlyUserAdmin(
+            model=get_user_model(), admin_site=AdminSite()
+        ).get_readonly_fields(
+            request=request, obj=user
+        )  # type: Iterable[str]
+
+        self.assertEqual(first=result, second=())
+
+    def test_get_actions__for_superuser(self) -> None:
+        """
+        Method must return actions list resolved by available permissions.
+
+        :return: nothing.
+        :rtype: None.
+        """
+
+        user = User.objects.first()
+        user.is_superuser = True
+        user.save(update_fields=["is_superuser"])
+        request = HttpRequest()  # type: HttpRequest
+        request.user = user
+        result = ReadOnlyUserAdmin(
+            model=get_user_model(), admin_site=AdminSite()
+        ).get_actions(
+            request=request
+        )  # type: OrderedDict[str, Any]
+        expected = OrderedDict(
+            [
+                (
+                    "delete_selected",
+                    (
+                        delete_selected,
+                        "delete_selected",
+                        "Delete selected %(verbose_name_plural)s",
+                    ),
+                )
+            ]
+        )  # type: OrderedDict[str, Any]
+
+        self.assertDictEqual(d1=result, d2=expected)
+
+    @override_settings(READONLY_ADMIN_EMPTY_ACTIONS=False)
+    def test_get_actions__without_empty_actions__for_superuser(self) -> None:
+        """
+        Method must return actions list resolved by available permissions.
+
+        :return: nothing.
+        :rtype: None.
+        """
+
+        user = User.objects.first()
+        user.is_superuser = True
+        user.save(update_fields=["is_superuser"])
+        request = HttpRequest()  # type: HttpRequest
+        request.user = user
+        result = ReadOnlyUserAdmin(
+            model=get_user_model(), admin_site=AdminSite()
+        ).get_actions(
+            request=request
+        )  # type: OrderedDict[str, Any]
+        expected = OrderedDict(
+            [
+                (
+                    "delete_selected",
+                    (
+                        delete_selected,
+                        "delete_selected",
+                        "Delete selected %(verbose_name_plural)s",
+                    ),
+                )
+            ]
+        )  # type: OrderedDict[str, Any]
+
+        self.assertDictEqual(d1=result, d2=expected)

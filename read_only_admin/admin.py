@@ -181,7 +181,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
             request=request, **kwargs
         )
 
-    def get_readonly_fields(self, request: HttpRequest, obj=None) -> List[str]:
+    def get_readonly_fields(self, request: HttpRequest, obj=None) -> Iterable[str]:
         """
         Get readonly fields.
         Get from: https://github.com/anupamshakya7/django-admin-hack/.
@@ -191,7 +191,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
         :param obj: an object.
         :type obj: django.db.models.Model.
         :return: readonly fields.
-        :rtype: List[str].
+        :rtype: Iterable[str]
         """
 
         for permission in request.user.get_all_permissions():
@@ -224,7 +224,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
 
         return self.readonly_fields
 
-    def get_actions(self, request: HttpRequest) -> "OrderedDict[str, str]":
+    def get_actions(self, request: HttpRequest) -> "OrderedDict[str, Any]":
         """
         Get actions.
         Get from: https://vinitkumar.me/articles/2014/05/18/Get-Readonly-Mode-IN-Django.html.  # noqa: E501
@@ -232,7 +232,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
         :param request: django HTTP request object.
         :type request: django.http.request.HttpRequest.
         :return: admin actions.
-        :rtype: OrderedDict.
+        :rtype: OrderedDict[str, Any].
         """
 
         actions = super(ReadonlyAdmin, self).get_actions(request)
