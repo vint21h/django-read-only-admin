@@ -6,7 +6,7 @@
 
 from collections import OrderedDict
 from functools import partial
-from typing import Any, Dict, List, Union, Callable, Iterable  # pylint: disable=W0611
+from typing import Any, Dict, List, Union, Iterable  # pylint: disable=W0611
 
 from django.contrib import admin
 from django.contrib.admin.utils import flatten_fieldsets
@@ -118,7 +118,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
     Readonly admin.
     """
 
-    change_form_template = "read_only_admin/change_form.html"
+    change_form_template = "read_only_admin/change_form.html"  # type: str
 
     def get_changelist(  # pylint: disable=R0201
         self, request: HttpRequest, **kwargs: Dict[str, Any]
@@ -224,7 +224,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
 
         return self.readonly_fields
 
-    def get_actions(self, request: HttpRequest) -> OrderedDict[str, Callable]:
+    def get_actions(self, request: HttpRequest) -> OrderedDict[str, str]:
         """
         Get actions.
         Get from: https://vinitkumar.me/articles/2014/05/18/Get-Readonly-Mode-IN-Django.html.  # noqa: E501
