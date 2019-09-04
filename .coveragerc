@@ -8,11 +8,15 @@ source = read_only_admin
 omit =
     */__init__.py
    read_only_admin/apps.py
+   read_only_admin/conf.py
+   read_only_admin/models.py
 
 [report]
 omit =
     */__init__.py
     read_only_admin/apps.py
+    read_only_admin/conf.py
+    read_only_admin/models.py
 exclude_lines =
     pragma: no cover
 
