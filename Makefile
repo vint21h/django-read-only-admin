@@ -16,7 +16,7 @@ tox:
 	tox;\
 
 test:
-	./manage.py test $(TESTS);\
+	bash -c 'PYTHONPATH="$$PYTHONPATH:$$PWD" django-admin test $(TESTS) --settings=tests.settings';\
 
 makemessages:
 	cd $(NAME);\
