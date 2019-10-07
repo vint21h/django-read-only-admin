@@ -273,7 +273,9 @@ class ReadonlyInline(admin.TabularInline):
     Readonly admin inline.
     """
 
-    def has_add_permission(self, request: HttpRequest, obj=None) -> bool:
+    def has_add_permission(
+        self, request: HttpRequest, obj: Optional[models.Model] = None
+    ) -> bool:
         """
         Overridden for custom readonly permission.
 
