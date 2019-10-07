@@ -273,7 +273,7 @@ class ReadonlyInline(admin.TabularInline):
     Readonly admin inline.
     """
 
-    def has_add_permission(
+    def has_add_permission(  # pylint: disable=W0221
         self, request: HttpRequest, obj: Optional[models.Model] = None
     ) -> bool:
         """
