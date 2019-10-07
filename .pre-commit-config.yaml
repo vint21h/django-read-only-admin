@@ -35,7 +35,7 @@ repos:
       name: mypy
       stages: [commit]
       language: system
-      entry: pipenv run mypy
+      entry: bash -c 'PYTHONPATH="$PYTHONPATH:$PWD" pipenv run mypy'
       types: [python]
       pass_filenames: false
     - id: check-manifest

@@ -9,7 +9,7 @@ from typing import List  # pylint: disable=W0611
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.http import HttpRequest
-from django.template import Context
+from django.template import Context, RequestContext
 from django.test import TestCase
 
 from read_only_admin.conf import settings
@@ -144,9 +144,10 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
 
         user = User.objects.first()
         request = HttpRequest()  # type: HttpRequest
-        request.user = user
-        context = Context(
-            {
+        request.user = user  # type: ignore
+        context = RequestContext(
+            request=request,
+            dict_={
                 "user": user,
                 "add": True,
                 "change": True,
@@ -159,8 +160,8 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
                 "has_delete_permission": True,
                 "opts": "auth.user",
                 "request": request,
-            }
-        )  # type: Context
+            },
+        )  # type: RequestContext
         result = readonly_submit_row(context=context)  # type: Context
 
         self.assertIsInstance(obj=result, cls=Context)
@@ -175,9 +176,10 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
 
         user = User.objects.first()
         request = HttpRequest()  # type: HttpRequest
-        request.user = user
-        context = Context(
-            {
+        request.user = user  # type: ignore
+        context = RequestContext(
+            request=request,
+            dict_={
                 "user": user,
                 "add": True,
                 "change": True,
@@ -190,8 +192,8 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
                 "has_delete_permission": True,
                 "opts": "auth.user",
                 "request": request,
-            }
-        )  # type: Context
+            },
+        )  # type: RequestContext
         result = readonly_submit_row(context=context)  # type: Context
 
         self.assertFalse(expr=result["show_delete_link"])
@@ -208,12 +210,13 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
         """
 
         user = User.objects.first()
-        user.is_superuser = True
-        user.save(update_fields=["is_superuser"])
+        user.is_superuser = True  # type: ignore
+        user.save(update_fields=["is_superuser"])  # type: ignore
         request = HttpRequest()  # type: HttpRequest
-        request.user = user
-        context = Context(
-            {
+        request.user = user  # type: ignore
+        context = RequestContext(
+            request=request,
+            dict_={
                 "user": user,
                 "add": True,
                 "change": True,
@@ -226,8 +229,8 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
                 "has_delete_permission": True,
                 "opts": "auth.user",
                 "request": request,
-            }
-        )  # type: Context
+            },
+        )  # type: RequestContext
         result = readonly_submit_row(context=context)  # type: Context
 
         self.assertTrue(expr=result["show_delete_link"])
@@ -249,9 +252,10 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
 
         user = User.objects.first()
         request = HttpRequest()  # type: HttpRequest
-        request.user = user
-        context = Context(
-            {
+        request.user = user  # type: ignore
+        context = RequestContext(
+            request=request,
+            dict_={
                 "user": user,
                 "add": True,
                 "change": True,
@@ -264,8 +268,8 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
                 "has_delete_permission": True,
                 "opts": "auth.user",
                 "request": request,
-            }
-        )  # type: Context
+            },
+        )  # type: RequestContext
         result = readonly_submit_row(context=context)  # type: Context
 
         self.assertTrue(expr=result["show_delete_link"])
@@ -284,12 +288,13 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
         """
 
         user = User.objects.first()
-        user.is_superuser = True
-        user.save(update_fields=["is_superuser"])
+        user.is_superuser = True  # type: ignore
+        user.save(update_fields=["is_superuser"])  # type: ignore
         request = HttpRequest()  # type: HttpRequest
-        request.user = user
-        context = Context(
-            {
+        request.user = user  # type: ignore
+        context = RequestContext(
+            request=request,
+            dict_={
                 "user": user,
                 "add": True,
                 "change": True,
@@ -302,8 +307,8 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
                 "has_delete_permission": True,
                 "opts": "auth.user",
                 "request": request,
-            }
-        )  # type: Context
+            },
+        )  # type: RequestContext
         result = readonly_submit_row(context=context)  # type: Context
 
         self.assertTrue(expr=result["show_delete_link"])

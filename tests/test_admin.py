@@ -5,6 +5,7 @@
 
 
 from collections import OrderedDict
+from io import StringIO
 from typing import Any, List, Type, Iterable  # pylint: disable=W0611
 
 from django.contrib.admin.actions import delete_selected
@@ -12,6 +13,7 @@ from django.contrib.admin.sites import AdminSite
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Permission
+from django.core.handlers.wsgi import WSGIRequest
 from django.forms.formsets import BaseFormSet  # pylint: disable=W0611
 from django.http import HttpRequest
 from django.test import TestCase
@@ -59,20 +61,22 @@ class ReadonlyChangeListTest(TestCase):
         Init method must set readonly property to True.
         """
 
-        request = HttpRequest()  # type: HttpRequest
-        request.user = User.objects.first()
+        request = WSGIRequest(
+            {"REQUEST_METHOD": "GET", "PATH_INFO": "/", "wsgi.input": StringIO()}
+        )  # type: WSGIRequest
+        request.user = User.objects.first()  # type: ignore
         result = ReadonlyChangeList(
             request=request,
             model=User,
-            list_display=UserAdmin.list_display,
-            list_display_links=UserAdmin.list_display_links,
-            list_filter=UserAdmin.list_filter,
+            list_display=[],
+            list_display_links=None,
+            list_filter=["is_active"],
             date_hierarchy=UserAdmin.date_hierarchy,
-            search_fields=UserAdmin.search_fields,
-            list_select_related=UserAdmin.list_select_related,
+            search_fields=[],
+            list_select_related=False,
             list_per_page=UserAdmin.list_per_page,
             list_max_show_all=UserAdmin.list_max_show_all,
-            list_editable=UserAdmin.list_editable,
+            list_editable=[],
             model_admin=ReadOnlyUserAdmin(
                 model=get_user_model(), admin_site=AdminSite()
             ),
@@ -111,7 +115,7 @@ class ReadonlyAdminTest(TestCase):
         """
 
         request = HttpRequest()  # type: HttpRequest
-        request.user = User.objects.first()
+        request.user = User.objects.first()  # type: ignore
         result = ReadOnlyUserAdmin(
             model=get_user_model(), admin_site=AdminSite()
         ).get_changelist(
@@ -129,12 +133,12 @@ class ReadonlyAdminTest(TestCase):
         """
 
         request = HttpRequest()  # type: HttpRequest
-        request.user = User.objects.first()
+        request.user = User.objects.first()  # type: ignore
         result = ReadOnlyUserAdmin(
             model=get_user_model(), admin_site=AdminSite()
         ).get_changelist_formset(
             request=request
-        )  # type: BaseFormSet
+        )  # type: Type[BaseFormSet]
 
         self.assertEqual(first=result.__name__, second="UserFormFormSet")
 
@@ -148,12 +152,10 @@ class ReadonlyAdminTest(TestCase):
 
         user = User.objects.first()
         request = HttpRequest()  # type: HttpRequest
-        request.user = user
+        request.user = user  # type: ignore
         result = ReadOnlyUserAdmin(
             model=get_user_model(), admin_site=AdminSite()
-        ).get_readonly_fields(
-            request=request, obj=user
-        )  # type: Iterable[str]
+        ).get_readonly_fields(request=request, obj=user)
         expected = [
             "username",
             "password",
@@ -169,7 +171,7 @@ class ReadonlyAdminTest(TestCase):
             "date_joined",
         ]  # type: List[str]
 
-        self.assertListEqual(list1=result, list2=expected)
+        self.assertListEqual(list1=result, list2=expected)  # type: ignore
 
     def test_get_actions(self) -> None:
         """
@@ -181,7 +183,7 @@ class ReadonlyAdminTest(TestCase):
 
         user = User.objects.first()
         request = HttpRequest()  # type: HttpRequest
-        request.user = user
+        request.user = user  # type: ignore
         result = ReadOnlyUserAdmin(
             model=get_user_model(), admin_site=AdminSite()
         ).get_actions(
@@ -201,7 +203,7 @@ class ReadonlyAdminTest(TestCase):
 
         user = User.objects.first()
         request = HttpRequest()  # type: HttpRequest
-        request.user = user
+        request.user = user  # type: ignore
         result = ReadOnlyUserAdmin(
             model=get_user_model(), admin_site=AdminSite()
         ).get_actions(
@@ -219,10 +221,10 @@ class ReadonlyAdminTest(TestCase):
         """
 
         user = User.objects.first()
-        user.is_superuser = True
-        user.save(update_fields=["is_superuser"])
+        user.is_superuser = True  # type: ignore
+        user.save(update_fields=["is_superuser"])  # type: ignore
         request = HttpRequest()  # type: HttpRequest
-        request.user = user
+        request.user = user  # type: ignore
         result = ReadOnlyUserAdmin(
             model=get_user_model(), admin_site=AdminSite()
         ).get_readonly_fields(
@@ -240,10 +242,10 @@ class ReadonlyAdminTest(TestCase):
         """
 
         user = User.objects.first()
-        user.is_superuser = True
-        user.save(update_fields=["is_superuser"])
+        user.is_superuser = True  # type: ignore
+        user.save(update_fields=["is_superuser"])  # type: ignore
         request = HttpRequest()  # type: HttpRequest
-        request.user = user
+        request.user = user  # type: ignore
         result = ReadOnlyUserAdmin(
             model=get_user_model(), admin_site=AdminSite()
         ).get_actions(
@@ -274,10 +276,10 @@ class ReadonlyAdminTest(TestCase):
         """
 
         user = User.objects.first()
-        user.is_superuser = True
-        user.save(update_fields=["is_superuser"])
+        user.is_superuser = True  # type: ignore
+        user.save(update_fields=["is_superuser"])  # type: ignore
         request = HttpRequest()  # type: HttpRequest
-        request.user = user
+        request.user = user  # type: ignore
         result = ReadOnlyUserAdmin(
             model=get_user_model(), admin_site=AdminSite()
         ).get_actions(

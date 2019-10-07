@@ -6,15 +6,25 @@
 
 from collections import OrderedDict
 from functools import partial
-from typing import Any, Dict, List, Type, Union, Iterable  # pylint: disable=W0611
+from typing import (  # pylint: disable=W0611
+    Any,
+    Dict,
+    List,
+    Type,
+    Tuple,
+    Union,
+    Callable,
+    Optional,
+)
 
 from django.contrib import admin
+from django.contrib.admin.filters import SimpleListFilter
 from django.contrib.admin.utils import flatten_fieldsets
 from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth import get_permission_codename
+from django.core.handlers.wsgi import WSGIRequest
 from django.db import models
-from django.forms.formsets import BaseFormSet
-from django.forms.models import modelformset_factory
+from django.forms.models import BaseModelFormSet, modelformset_factory
 from django.http import HttpRequest
 
 from read_only_admin.conf import settings
@@ -35,49 +45,51 @@ class ReadonlyChangeList(ChangeList):
 
     def __init__(
         self,
-        request: HttpRequest,
-        model: models.Model,
-        list_display: Iterable[str],
-        list_display_links: Iterable[str],
-        list_filter: Iterable[str],
-        date_hierarchy: str,
-        search_fields: Iterable[str],
-        list_select_related: Union[bool, Iterable[str]],
+        request: WSGIRequest,
+        model: Type[models.Model],
+        list_display: Union[List[Union[Callable, str]], Tuple[str]],  # type: ignore
+        list_display_links: Optional[  # type: ignore
+            Union[List[Callable], List[str], Tuple[str]]
+        ],
+        list_filter: Union[List[Type[SimpleListFilter]], List[str], Tuple[str]],
+        date_hierarchy: Optional[str],
+        search_fields: Union[List[str], Tuple[str]],
+        list_select_related: Union[Tuple[str], bool],
         list_per_page: int,
         list_max_show_all: int,
-        list_editable: Iterable[str],
+        list_editable: Union[List[str], Tuple[str]],
         model_admin: admin.ModelAdmin,
-        sortable_by: Iterable[str],
+        sortable_by: Union[List[Callable], List[str], Tuple[str]],  # type: ignore
     ) -> None:
         """
         Overridden to set extra readonly property.
 
-        :param request: django HTTP request object.
-        :type request: django.http.HttpRequest.
-        :param model: django related model instance.
-        :type model: django.db.models.Model.
-        :param list_display: list of fields to dis[lay.
-        :type list_display: Iterable.
+        :param request: django WSGI request object.
+        :type request: django.core.handlers.wsgi.WSGIRequest.
+        :param model: django related model.
+        :type model: Type[django.db.models.Model].
+        :param list_display: list of fields to display.
+        :type list_display: Union[List[Union[Callable, str]], Tuple[str]].
         :param list_display_links: list of fields to display as links.
-        :type list_display_links: Iterable.
+        :type list_display_links: Optional[Union[List[Callable], List[str], Tuple[str]]].
         :param list_filter: list of fields by which can be filtering do.
-        :type list_filter: Iterable.
+        :type list_filter: Union[List[Type[SimpleListFilter]], List[str], Tuple[str]].
         :param date_hierarchy: generate date hierarchy for field name.
-        :type date_hierarchy: str.
+        :type date_hierarchy: Optional[str].
         :param search_fields: list of fields by which can be search do.
-        :type search_fields: Iterable.
+        :type search_fields: Union[List[str], Tuple[str]].
         :param list_select_related:
-        :type list_select_related: Union[bool, Iterable].
+        :type list_select_related: Union[Tuple[str], bool].
         :param list_per_page: items on page number.
         :type list_per_page: int.
         :param list_max_show_all:  how many items can appear on a show all change list page.
         :type list_max_show_all: int.
         :param list_editable: list of inline editable fields.
-        :type list_editable: Iterable.
-        :param model_admin: django related admin instance.
-        :type model_admin: django.contrib.admin.ModelAdmin.
+        :type list_editable: Union[List[str], Tuple[str]].
+        :param model_admin: django related admin.
+        :type model_admin: Type[django.contrib.admin.ModelAdmin].
         :param sortable_by: brute enable/disable sorting for list of fields.
-        :type sortable_by: Iterable.
+        :type sortable_by: Union[List[Callable], List[str], Tuple[str]].
         """  # noqa: E501
 
         super(ReadonlyChangeList, self).__init__(
@@ -138,7 +150,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
 
     def get_changelist_formset(
         self, request: HttpRequest, **kwargs: Dict[str, Any]
-    ) -> BaseFormSet:
+    ) -> Type[BaseModelFormSet]:
         """
         Empty FormSet class for use on the changelist page if list_editable and readonly permission is used.  # noqa: E501
 
@@ -147,7 +159,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
         :param kwargs: additional args.
         :type kwargs: Dict[str, Any].
         :return: FormSet for changelist.
-        :rtype: django.forms.formsets.BaseFormSet.
+        :rtype: django.forms.models.BaseModelFormSet.
         """
 
         for permission in request.user.get_all_permissions():
@@ -174,14 +186,16 @@ class ReadonlyAdmin(admin.ModelAdmin):
                         self.get_changelist_form(request),
                         extra=0,
                         fields=(),
-                        **defaults
+                        **defaults  # type: ignore
                     )
 
         return super(ReadonlyAdmin, self).get_changelist_formset(
             request=request, **kwargs
         )
 
-    def get_readonly_fields(self, request: HttpRequest, obj=None) -> Iterable[str]:
+    def get_readonly_fields(
+        self, request: HttpRequest, obj: Optional[models.Model] = None
+    ) -> Union[List[str], Tuple[str]]:
         """
         Get readonly fields.
         Get from: https://github.com/anupamshakya7/django-admin-hack/.
@@ -191,7 +205,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
         :param obj: an object.
         :type obj: django.db.models.Model.
         :return: readonly fields.
-        :rtype: Iterable[str]
+        :rtype: Union[List[str], Tuple[str]].
         """
 
         for permission in request.user.get_all_permissions():
@@ -208,7 +222,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
                 ):
                     if self.get_fieldsets(request=request, obj=obj):
 
-                        return flatten_fieldsets(
+                        return flatten_fieldsets(  # type: ignore
                             self.get_fieldsets(request=request, obj=obj)
                         )
                     else:

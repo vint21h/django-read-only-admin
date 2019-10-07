@@ -45,13 +45,13 @@ def unescape(value: str) -> str:
 
 
 @register.inclusion_tag("admin/submit_line.html", takes_context=True)
-def readonly_submit_row(context: template.Context) -> template.Context:
+def readonly_submit_row(context: template.RequestContext) -> template.Context:
     """
     Read only submit row templatetag.
     Get from: http://anupamshakya.blogspot.com/2013/07/create-readonly-permission-for-all.html.  # noqa: E501
 
     :param context: template context.
-    :type context: django.template.Context.
+    :type context: django.template.RequestContext.
     :return: updated context.
     :rtype: django.template.Context.
     """
