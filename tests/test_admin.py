@@ -33,7 +33,7 @@ class ReadOnlyUserAdmin(UserAdmin, ReadonlyAdmin):
     Read only admin class.
     """
 
-    pass
+    pass  # pylint: disable=W0107
 
 
 class ReadonlyChangeListTest(TestCase):
