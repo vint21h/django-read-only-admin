@@ -31,6 +31,12 @@ repos:
       language: system
       entry: pipenv run flake8
       types: [python]
+    - id: pylint
+      name: pylint
+      stages: [commit]
+      language: system
+      entry: pipenv run pylint read_only_admin tests
+      types: [python]
     - id: mypy
       name: mypy
       stages: [commit]
