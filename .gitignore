@@ -40,7 +40,6 @@ media/*
 *env*/
 static/*
 *.pid
-error-pages/*
 .credentials
 .env
 .coverage
