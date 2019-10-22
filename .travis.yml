@@ -7,6 +7,9 @@ python:
   - "3.6"
   - "3.7"
   - "3.8"
+env:
+  - DJANGO="2.1.x"
+  - DJANGO="2.2.x"
 before_install:
   - |
       pip install pipenv
@@ -14,5 +17,4 @@ before_install:
 script:
   - make tox
 after_success:
-  - |
-      make coverage
+  - make coverage
