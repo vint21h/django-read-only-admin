@@ -4,7 +4,7 @@
 # read_only_admin/signals.py
 
 
-from typing import List, Tuple, Union, Iterable  # pylint: disable=W0611
+from typing import List, Union, Iterable  # pylint: disable=W0611
 
 from django.apps import AppConfig
 from django.contrib.auth.models import Permission
@@ -62,4 +62,4 @@ def add_readonly_permissions(
             content_type=content_type,
             codename=get_read_only_permission_codename(model=content_type.model),
             name=get_read_only_permission_name(model=content_type.model),
-        )  # type: Tuple[Permission, bool]
+        )
