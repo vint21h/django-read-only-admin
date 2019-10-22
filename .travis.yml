@@ -13,7 +13,7 @@ env:
 before_install:
   - |
       pip install pipenv
-      pip install -e .[test]
+      pip install .[test]
 script:
   - make tox
 after_success:
