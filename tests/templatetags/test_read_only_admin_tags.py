@@ -42,9 +42,7 @@ class UnescapeTemplatetagTest(TestCase):
         """
 
         escaped = """&lt;script type=&quot;text/javascript&quot;&gt;alert(&#39;PWND &amp; HACKD!!1&#39;)&lt;/script&gt;"""  # noqa: E501, type: str
-        unescaped = (
-            """<script type="text/javascript">alert('PWND & HACKD!!1')</script>"""
-        )  # noqa: E501, type: str
+        unescaped = """<script type="text/javascript">alert('PWND & HACKD!!1')</script>"""  # noqa: E501, type: str
 
         self.assertEqual(first=unescape(value=escaped), second=unescaped)
 
@@ -278,7 +276,7 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
         self.assertTrue(expr=result["show_save"])
 
     def test_readonly_submit_row__without__read_only_permissions__for_superuser(
-        self
+        self,
     ) -> None:
         """
         Test templatetag without read only permissions for superuser.

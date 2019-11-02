@@ -6,7 +6,7 @@
 ignore = CVS
 ignore-patterns =
 persistent = yes
-load-plugins =
+load-plugins = pylint_django,pylint_django.checkers.db_performance
 jobs = 1
 unsafe-load-any-extension = no
 extension-pkg-whitelist =
