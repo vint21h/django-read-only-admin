@@ -44,6 +44,13 @@ repos:
       entry: bandit -r read_only_admin tests
       types: [python]
       pass_filenames: false
+    - id: dodgy
+      name: dodgy
+      stages: [commit]
+      language: system
+      entry: dodgy
+      types: [python]
+      pass_filenames: false
     - id: mypy
       name: mypy
       stages: [commit]
