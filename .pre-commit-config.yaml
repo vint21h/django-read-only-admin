@@ -58,6 +58,13 @@ repos:
       pass_filenames: false
       entry: pipenv run check-manifest
       types: [python]
+    - id: pyroma
+      name: pyroma
+      stages: [commit]
+      language: system
+      pass_filenames: false
+      entry: pipenv run pyroma -d .
+      types: [python]
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.4.0
     hooks:
