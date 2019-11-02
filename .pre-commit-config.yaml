@@ -12,6 +12,12 @@ repos:
       pass_filenames: false
       entry: pipenv run seed-isort-config
       types: [python]
+    - id: removestar
+      name: removestar
+      stages: [commit]
+      language: system
+      entry: pipenv run removestar -i read_only_admin tests
+      types: [python]
     - id: isort
       name: isort
       stages: [commit]

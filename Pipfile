@@ -38,6 +38,7 @@ tox-travis = "==0.12"
 bandit = "==1.6.2"
 pyroma = "==2.5"
 dodgy = "==0.1.9"
+removestar = "==1.2.2"
 
 
 [packages]
