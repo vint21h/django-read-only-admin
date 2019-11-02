@@ -1,0 +1,6 @@
+# django-read-only-admin
+# .bandit
+
+
+[bandit]
+skips: ['B507']

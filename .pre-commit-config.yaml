@@ -37,6 +37,13 @@ repos:
       language: system
       entry: pipenv run pylint read_only_admin tests
       types: [python]
+    - id: bandit
+      name: bandit
+      stages: [commit]
+      language: system
+      entry: bandit -r read_only_admin tests
+      types: [python]
+      pass_filenames: false
     - id: mypy
       name: mypy
       stages: [commit]

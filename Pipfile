@@ -35,6 +35,7 @@ django-stubs = "==1.2.0"
 pylint = "==2.4.3"
 pylint-django = "==2.0.11"
 tox-travis = "==0.12"
+bandit = "==1.6.2"
 
 
 [packages]
