@@ -5,7 +5,7 @@
 A django-read-only-admin documentation
 ======================================
 
-|Travis|_ |Coverage|_ |Codacy|_ |Requires|_ |pypi-license|_ |pypi-version|_ |pypi-python-version|_ |pypi-django-version|_ |pypi-format|_ |pypi-wheel|_ |pypi-status|_
+|Travis|_ |Coverage|_ |Requires|_ |pypi-license|_ |pypi-version|_ |pypi-python-version|_ |pypi-django-version|_ |pypi-format|_ |pypi-wheel|_ |pypi-status|_
 
     *django-read-only-admin is a Django reusable application that fully implement read only admin*
 
@@ -98,8 +98,6 @@ For other authors list see AUTHORS file.
     :alt: Travis
 .. |Coverage| image:: https://api.codacy.com/project/badge/Coverage/055abbc43fe24b5fb287bf4317530b68
     :alt: Coverage
-.. |Codacy| image:: https://api.codacy.com/project/badge/Grade/055abbc43fe24b5fb287bf4317530b68
-    :alt: Codacy
 .. |Requires| image:: https://requires.io/github/vint21h/django-read-only-admin/requirements.svg?branch=master
     :alt: Requires
 .. |pypi-license| image:: https://img.shields.io/pypi/l/django-read-only-admin
@@ -118,7 +116,6 @@ For other authors list see AUTHORS file.
     :alt: Package status
 .. _Travis: https://travis-ci.org/vint21h/django-read-only-admin/
 .. _Coverage: https://www.codacy.com/app/vint21h/django-read-only-admin
-.. _Codacy: https://www.codacy.com/app/vint21h/django-read-only-admin
 .. _Requires: https://requires.io/github/vint21h/django-read-only-admin/requirements/?branch=master
 .. _pypi-license: https://pypi.org/project/django-read-only-admin/
 .. _pypi-version: https://pypi.org/project/django-read-only-admin/
