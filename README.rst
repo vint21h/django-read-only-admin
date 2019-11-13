@@ -115,7 +115,7 @@ For other authors list see AUTHORS file.
 .. |pypi-status| image:: https://img.shields.io/pypi/status/django-read-only-admin
     :alt: Package status
 .. _Travis: https://travis-ci.org/vint21h/django-read-only-admin/
-.. _Coveralls: https://www.codacy.com/app/vint21h/django-read-only-admin
+.. _Coveralls: https://coveralls.io/github/vint21h/django-xicon?branch=master
 .. _Requires: https://requires.io/github/vint21h/django-read-only-admin/requirements/?branch=master
 .. _pypi-license: https://pypi.org/project/django-read-only-admin/
 .. _pypi-version: https://pypi.org/project/django-read-only-admin/
