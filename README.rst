@@ -24,15 +24,15 @@ Configuration
 
     # settings.py
 
-    INSTALLED_APPS += (
+    INSTALLED_APPS += [
         "read_only_admin",
-    )
+    ]
 
 * Run ``django-admin migrate``.
 * Then add ``user/group`` ``change/delete/add/readonly`` model permissions.
 
-django-read-only-admin settings
--------------------------------
+Settings
+--------
 ``READONLY_ADMIN_PERMISSION_PREFIX``
     Read-only permission prefix. Defaults to: ``"readonly"``.
 
@@ -95,16 +95,27 @@ Contacts
 For other authors list see AUTHORS file.
 
 .. |Travis| image:: https://travis-ci.org/vint21h/django-read-only-admin.svg?branch=master
+    :alt: Travis
 .. |Coverage| image:: https://api.codacy.com/project/badge/Coverage/055abbc43fe24b5fb287bf4317530b68
+    :alt: Coverage
 .. |Codacy| image:: https://api.codacy.com/project/badge/Grade/055abbc43fe24b5fb287bf4317530b68
+    :alt: Codacy
 .. |Requires| image:: https://requires.io/github/vint21h/django-read-only-admin/requirements.svg?branch=master
+    :alt: Requires
 .. |pypi-license| image:: https://img.shields.io/pypi/l/django-read-only-admin
+    :alt: License
 .. |pypi-version| image:: https://img.shields.io/pypi/v/django-read-only-admin
+    :alt: Version
 .. |pypi-django-version| image:: https://img.shields.io/pypi/djversions/django-read-only-admin
+    :alt: Supported Django version
 .. |pypi-python-version| image:: https://img.shields.io/pypi/pyversions/django-read-only-admin
+    :alt: Supported Python version
 .. |pypi-format| image:: https://img.shields.io/pypi/format/django-read-only-admin
+    :alt: Package format
 .. |pypi-wheel| image:: https://img.shields.io/pypi/wheel/django-read-only-admin
+    :alt: Python wheel support
 .. |pypi-status| image:: https://img.shields.io/pypi/status/django-read-only-admin
+    :alt: Package status
 .. _Travis: https://travis-ci.org/vint21h/django-read-only-admin/
 .. _Coverage: https://www.codacy.com/app/vint21h/django-read-only-admin
 .. _Codacy: https://www.codacy.com/app/vint21h/django-read-only-admin
