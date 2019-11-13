@@ -47,7 +47,7 @@ repos:
       name: bandit
       stages: [commit]
       language: system
-      entry: bandit -r read_only_admin tests
+      entry: bandit -r xicon tests --ini=.bandit
       types: [python]
       pass_filenames: false
     - id: dodgy
