@@ -43,5 +43,4 @@ static/*
 .credentials
 .env
 .coverage
-coverage.xml
 Pipfile.lock
