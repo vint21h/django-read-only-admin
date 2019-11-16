@@ -83,7 +83,7 @@ help:
 	@echo "    check-build:"
 	@echo "        Run twine checks."
 	@echo "    check-upload:"
-	@echo "        Uload package to test PyPi using twine."
+	@echo "        Upload package to test PyPi using twine."
 	@echo "    upload:"
 	@echo "        Upload package to PyPi using twine."
 	@echo "    clean:"
