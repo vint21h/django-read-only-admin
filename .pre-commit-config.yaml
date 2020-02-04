@@ -35,7 +35,7 @@ repos:
       name: flake8
       stages: [commit]
       language: system
-      entry: pipenv run flake8
+      entry: bash -c 'PYTHONPATH="$PYTHONPATH:$PWD" pipenv run flake8 --mypy-config=setup.cfg'
       types: [python]
     - id: pylint
       name: pylint
@@ -47,14 +47,14 @@ repos:
       name: bandit
       stages: [commit]
       language: system
-      entry: bandit -r read_only_admin tests --ini=.bandit
+      entry: pipenv run bandit -r read_only_admin tests --ini=.bandit
       types: [python]
       pass_filenames: false
     - id: dodgy
       name: dodgy
       stages: [commit]
       language: system
-      entry: dodgy
+      entry: pipenv run dodgy
       types: [python]
       pass_filenames: false
     - id: mypy
