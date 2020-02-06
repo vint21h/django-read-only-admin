@@ -17,6 +17,4 @@ before_install:
 script:
   - make tox
 after_success:
-  - |
-      make coverage
-      make coverage-upload
+  - make coveralls
