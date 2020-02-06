@@ -4,9 +4,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: django-read-only-admin 0.9.1\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-06 15:02+0200\n"
+"Project-Id-Version: django-read-only-admin 0.9.2\n"
+"Report-Msgid-Bugs-To: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
+"POT-Creation-Date: 2020-02-06 15:13+0200\n"
 "PO-Revision-Date: 2019-08-26 16:48+0300\n"
 "Last-Translator: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
 "Language-Team: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
@@ -14,6 +14,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
 
 #: read_only_admin/apps.py:22
 msgid "Django read only admin"
