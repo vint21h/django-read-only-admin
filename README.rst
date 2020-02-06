@@ -54,7 +54,7 @@ Just inherit your custom Django admin class from ``read_only_admin.admin.Readonl
 
     class MyCustomAdmin(ReadonlyAdmin):
 
-        pass
+        ...
 
 Also tabular and stacked inlines are supported.
 
@@ -69,14 +69,14 @@ Also tabular and stacked inlines are supported.
 
     class MyCustomTabularInline(ReadonlyTabularInline):
 
-        model = MyModel
-        extra = 0
+        model = MyModel  # type: Type[Model]
+        extra = 0  # type: int
 
 
     class MyCustomStackedInline(ReadonlyStackedInline):
 
-        model = MyModel
-        extra = 0
+        model = MyModel  # type: Type[Model]
+        extra = 0  # type: int
 
 If you use ``list_editable`` in your custom admin classes, copy ``read_only_admin/templates/admin/pagination.html`` to your project ``templates/admin`` directory.
 
