@@ -3,7 +3,7 @@
 
 
 .ONESHELL:
-PHONY: tox test makemessages compilemessages bumpversion build sign check check-build check-upload upload clean coverage coverage-upload help
+PHONY: tox test makemessages compilemessages bumpversion build sign check check-build check-upload upload clean coverage coverage-upload release help
 TEST_PYPI_URL=https://test.pypi.org/legacy/
 NAME=read_only_admin
 EXTENSIONS=py,html,txt
@@ -78,6 +78,21 @@ coverage-upload:
 	coveralls;\
 
 
+release:
+	make bumpversion &&\
+	git co master &&\
+	git merge dev &&\
+	git co dev &&\
+	git push --all &&\
+	git push --tags &&\
+	make build &&\
+	make sign &&\
+	make check-build &&\
+	make check-upload &&\
+	make upload &&\
+	make clean;\
+
+
 help:
 	@echo "    help:"
 	@echo "        Show this help."
@@ -109,3 +124,5 @@ help:
 	@echo "        Generate coverage report."
 	@echo "    coverage-upload:"
 	@echo "        Upload coverage report to Coveralls."
+	@echo "    release:"
+	@echo "        Release code."
