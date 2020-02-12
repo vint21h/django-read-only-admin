@@ -13,8 +13,8 @@ A django-read-only-admin documentation
 
 Installation
 ------------
-* Obtain your copy of source code from the git repository: ``git clone https://github.com/vint21h/django-read-only-admin.git``. Or download the latest release from https://github.com/vint21h/django-read-only-admin/tags/.
-* Run ``python ./setup.py install`` from the repository source tree or the unpacked archive. Or use pip: ``pip install django-read-only-admin``.
+* Obtain your copy of source code from the git repository: ``$ git clone https://github.com/vint21h/django-read-only-admin.git``. Or download the latest release from https://github.com/vint21h/django-read-only-admin/tags/.
+* Run ``$ python ./setup.py install`` from the repository source tree or the unpacked archive. Or use pip: ``$ pip install django-read-only-admin``.
 
 Configuration
 -------------
@@ -28,7 +28,7 @@ Configuration
         "read_only_admin",
     ]
 
-* Run ``django-admin migrate``.
+* Run ``$ python ./manage.py migrate``.
 * Then add ``user/group`` ``change/delete/add/readonly`` model permissions.
 
 Settings
@@ -52,6 +52,7 @@ Just inherit your custom Django admin class from ``read_only_admin.admin.Readonl
 
     from read_only_admin.admin import ReadonlyAdmin
 
+
     class MyCustomAdmin(ReadonlyAdmin):
 
         ...
@@ -66,6 +67,7 @@ Also tabular and stacked inlines are supported.
         ReadonlyStackedInline,
         ReadonlyTabularInline,
     )
+
 
     class MyCustomTabularInline(ReadonlyTabularInline):
 
