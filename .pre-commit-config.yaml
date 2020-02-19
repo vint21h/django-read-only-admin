@@ -30,7 +30,7 @@ repos:
       language: system
       entry: pipenv run black read_only_admin tests
       types: [python]
-      language_version: python3.7
+      language_version: python3.8
     - id: flake8
       name: flake8
       stages: [commit]
