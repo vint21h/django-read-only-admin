@@ -37,7 +37,7 @@ compilemessages:
 
 
 bumpversion:
-	git tag -a $(VERSION) -m 'v$(VERSION)';\
+	git tag -a $(VERSION) -m "v$(VERSION)";\
 
 
 build:
