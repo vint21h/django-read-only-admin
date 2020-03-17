@@ -12,7 +12,7 @@ verify_ssl = true
 bandit = "==1.6.2"
 black = "==19.10b0"
 check-manifest = "==0.41"
-coverage = "==5.0.3"
+coverage = "==5.0.4"
 coveralls = "==1.11.1"
 django-nose = "==1.4.6"
 django-stubs = "==1.5.0"
