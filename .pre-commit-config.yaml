@@ -37,6 +37,12 @@ repos:
       language: system
       entry: bash -c 'PYTHONPATH="$PYTHONPATH:$PWD" pipenv run flake8 --mypy-config=setup.cfg'
       types: [python]
+    - id: interrogate
+      name: interrogate
+      stages: [commit]
+      language: system
+      entry: interrogate read_only_admin tests -I -M
+      types: [python]
     - id: pylint
       name: pylint
       stages: [commit]
