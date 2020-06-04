@@ -35,7 +35,7 @@ repos:
       name: flake8
       stages: [commit]
       language: system
-      entry: bash -c 'PYTHONPATH="$PYTHONPATH:$PWD" pipenv run flake8 --mypy-config=setup.cfg'
+      entry: pipenv run flake8
       types: [python]
     - id: interrogate
       name: interrogate
