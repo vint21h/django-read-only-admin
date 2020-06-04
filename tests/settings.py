@@ -69,6 +69,6 @@ NOSE_ARGS = [
 ROOT_URLCONF = "read_only_admin.urls"  # type: str
 
 # read only admin settings
-READONLY_ADMIN_PERMISSION_PREFIX = "readonly"  # type: str
-READONLY_ADMIN_PERMISSION_NAME_PREFIX = "Read only"  # type: str
-READONLY_ADMIN_EMPTY_ACTIONS = True  # type: bool
+READ_ONLY_ADMIN_PERMISSION_PREFIX = "readonly"  # type: str
+READ_ONLY_ADMIN_PERMISSION_NAME_PREFIX = "Read only"  # type: str
+READ_ONLY_ADMIN_EMPTY_ACTIONS = True  # type: bool

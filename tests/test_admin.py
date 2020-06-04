@@ -192,7 +192,7 @@ class ReadonlyAdminTest(TestCase):
 
         self.assertDictEqual(d1=result, d2=OrderedDict())
 
-    @override_settings(READONLY_ADMIN_EMPTY_ACTIONS=False)
+    @override_settings(READ_ONLY_ADMIN_EMPTY_ACTIONS=False)
     def test_get_actions__without_empty_actions(self) -> None:
         """
         Method must return actions list resolved by available permissions.
@@ -266,7 +266,7 @@ class ReadonlyAdminTest(TestCase):
 
         self.assertDictEqual(d1=result, d2=expected)
 
-    @override_settings(READONLY_ADMIN_EMPTY_ACTIONS=False)
+    @override_settings(READ_ONLY_ADMIN_EMPTY_ACTIONS=False)
     def test_get_actions__without_empty_actions__for_superuser(self) -> None:
         """
         Method must return actions list resolved by available permissions.

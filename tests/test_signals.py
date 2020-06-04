@@ -27,7 +27,7 @@ class AddReadOnlyPermissionsSignalTest(TestCase):
         self.assertListEqual(
             list1=list(
                 Permission.objects.filter(
-                    codename__startswith=settings.READONLY_ADMIN_PERMISSION_PREFIX
+                    codename__startswith=settings.READ_ONLY_ADMIN_PERMISSION_PREFIX
                 ).values_list("codename", flat=True)
             ),
             list2=[
@@ -46,7 +46,7 @@ class AddReadOnlyPermissionsSignalTest(TestCase):
 
         self.assertEqual(
             first=Permission.objects.filter(
-                codename__startswith=settings.READONLY_ADMIN_PERMISSION_PREFIX
+                codename__startswith=settings.READ_ONLY_ADMIN_PERMISSION_PREFIX
             ).count(),
             second=5,
         )

@@ -245,7 +245,7 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
         """
 
         Permission.objects.filter(
-            codename__startswith=settings.READONLY_ADMIN_PERMISSION_PREFIX
+            codename__startswith=settings.READ_ONLY_ADMIN_PERMISSION_PREFIX
         ).delete()
 
         user = User.objects.first()

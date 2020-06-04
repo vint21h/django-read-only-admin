@@ -19,15 +19,18 @@ class DjangoReadOnlyAdminAppConf(AppConf):
     """
 
     PERMISSION_PREFIX = getattr(
-        settings, "READONLY_ADMIN_PERMISSION_PREFIX", "readonly"
+        settings, "READ_ONLY_ADMIN_PERMISSION_PREFIX", "readonly"
     )  # type: str
     PERMISSION_NAME_PREFIX = getattr(
-        settings, "READONLY_ADMIN_PERMISSION_NAME_PREFIX", "Read only"
+        settings, "READ_ONLY_ADMIN_PERMISSION_NAME_PREFIX", "Read only"
     )  # type: str
     EMPTY_ACTIONS = getattr(
-        settings, "READONLY_ADMIN_EMPTY_ACTIONS", True
+        settings, "READ_ONLY_ADMIN_EMPTY_ACTIONS", True
     )  # type: bool
 
     class Meta:
+        """
+        Config settings.
+        """
 
         prefix = "read_only_admin"  # type: str
