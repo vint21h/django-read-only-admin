@@ -36,9 +36,9 @@ def add_readonly_permissions(
     Get from: https://github.com/anupamshakya7/django-admin-hack/.
 
     :param sender: installed application config instance
-    :type sender: django.apps.AppConfig
+    :type sender: AppConfig
     :param app_config: same as sender
-    :type app_config: django.apps.AppConfig
+    :type app_config: AppConfig
     :param verbosity: verbosity level
     :type verbosity: int
     :param interactive: prompt user to input things

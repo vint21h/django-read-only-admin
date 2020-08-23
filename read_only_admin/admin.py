@@ -17,14 +17,14 @@ from typing import (  # pylint: disable=W0611
     Optional,
 )
 
-from django.db import models
-from django.contrib import admin
+from django.db.models import Model
 from django.http import HttpRequest
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth import get_permission_codename
 from django.contrib.admin.utils import flatten_fieldsets
 from django.contrib.admin.filters import SimpleListFilter
+from django.contrib.admin import ModelAdmin, TabularInline
 from django.forms.models import BaseModelFormSet, modelformset_factory
 
 from read_only_admin.conf import settings
@@ -46,7 +46,7 @@ class ReadonlyChangeList(ChangeList):
     def __init__(
         self,
         request: WSGIRequest,
-        model: Type[models.Model],
+        model: Type[Model],
         list_display: Union[List[Union[Callable, str]], Tuple[str]],  # type: ignore
         list_display_links: Optional[  # type: ignore
             Union[List[Callable], List[str], Tuple[str]]
@@ -58,16 +58,16 @@ class ReadonlyChangeList(ChangeList):
         list_per_page: int,
         list_max_show_all: int,
         list_editable: Union[List[str], Tuple[str]],
-        model_admin: admin.ModelAdmin,
+        model_admin: ModelAdmin,
         sortable_by: Union[List[Callable], List[str], Tuple[str]],  # type: ignore
     ) -> None:
         """
         Overridden to set extra readonly property.
 
         :param request: django WSGI request object
-        :type request: django.core.handlers.wsgi.WSGIRequest
+        :type request: WSGIRequest
         :param model: django related model
-        :type model: Type[django.db.models.Model]
+        :type model: Type[Model]
         :param list_display: list of fields to display
         :type list_display: Union[List[Union[Callable, str]], Tuple[str]]
         :param list_display_links: list of fields to display as links
@@ -87,7 +87,7 @@ class ReadonlyChangeList(ChangeList):
         :param list_editable: list of inline editable fields
         :type list_editable: Union[List[str], Tuple[str]]
         :param model_admin: django related admin
-        :type model_admin: Type[django.contrib.admin.ModelAdmin]
+        :type model_admin: ModelAdmin
         :param sortable_by: brute enable/disable sorting for list of fields
         :type sortable_by: Union[List[Callable], List[str], Tuple[str]]
         """  # noqa: E501
@@ -125,7 +125,7 @@ class ReadonlyChangeList(ChangeList):
                     self.readonly = True
 
 
-class ReadonlyAdmin(admin.ModelAdmin):
+class ReadonlyAdmin(ModelAdmin):
     """
     Readonly admin.
     """
@@ -139,11 +139,11 @@ class ReadonlyAdmin(admin.ModelAdmin):
         Returns the ReadonlyChangeList class for use on the changelist page.
 
         :param request: django HTTP request object
-        :type request: django.http.request.HttpRequest
+        :type request: HttpRequest
         :param kwargs: additional args
         :type kwargs: Dict[str, Any]
         :return: readonly change list
-        :rtype: read_only_admin.admin.ReadonlyChangeList
+        :rtype: ReadonlyChangeList
         """
 
         return ReadonlyChangeList
@@ -155,11 +155,11 @@ class ReadonlyAdmin(admin.ModelAdmin):
         Empty FormSet class for use on the changelist page if list_editable and readonly permission is used.  # noqa: E501
 
         :param request: django HTTP request object
-        :type request: django.http.request.HttpRequest
+        :type request: HttpRequest
         :param kwargs: additional args
         :type kwargs: Dict[str, Any]
         :return: FormSet for changelist
-        :rtype: django.forms.models.BaseModelFormSet
+        :rtype: BaseModelFormSet
         """
 
         for permission in request.user.get_all_permissions():
@@ -194,16 +194,16 @@ class ReadonlyAdmin(admin.ModelAdmin):
         )
 
     def get_readonly_fields(
-        self, request: HttpRequest, obj: Optional[models.Model] = None
+        self, request: HttpRequest, obj: Optional[Model] = None
     ) -> Union[List[str], Tuple[str]]:
         """
         Get readonly fields.
         Get from: https://github.com/anupamshakya7/django-admin-hack/.
 
         :param request: django HTTP request object
-        :type request: django.http.request.HttpRequest
+        :type request: HttpRequest
         :param obj: an object
-        :type obj: django.db.models.Model
+        :type obj: Model
         :return: readonly fields
         :rtype: Union[List[str], Tuple[str]]
         """
@@ -244,7 +244,7 @@ class ReadonlyAdmin(admin.ModelAdmin):
         Get from: https://vinitkumar.me/articles/2014/05/18/Get-Readonly-Mode-IN-Django.html.  # noqa: E501
 
         :param request: django HTTP request object
-        :type request: django.http.request.HttpRequest
+        :type request: HttpRequest
         :return: admin actions
         :rtype: OrderedDict[str, Any]
         """
@@ -268,21 +268,21 @@ class ReadonlyAdmin(admin.ModelAdmin):
         return actions
 
 
-class ReadonlyInline(admin.TabularInline):
+class ReadonlyInline(TabularInline):
     """
     Readonly admin inline.
     """
 
     def has_add_permission(  # pylint: disable=W0221
-        self, request: HttpRequest, obj: Optional[models.Model] = None
+        self, request: HttpRequest, obj: Optional[Model] = None
     ) -> bool:
         """
         Overridden for custom readonly permission.
 
         :param request: django HTTP request object
-        :type request: django.http.request.HttpRequest
+        :type request: HttpRequest
         :param obj: an object
-        :type obj: django.db.models.Model
+        :type obj: Model
         :return: has user add permission
         :rtype: bool
         """
@@ -318,9 +318,9 @@ class ReadonlyInline(admin.TabularInline):
         Overridden for custom readonly permission.
 
         :param request: django HTTP request object
-        :type request: django.http.request.HttpRequest
+        :type request: HttpRequest
         :param obj: an object
-        :type obj: django.db.models.Model
+        :type obj: Model
         :return: has user delete permission
         :rtype: bool
         """
@@ -357,9 +357,9 @@ class ReadonlyInline(admin.TabularInline):
         Get from: https://github.com/anupamshakya7/django-admin-hack/.
 
         :param request: django HTTP request object
-        :type request: django.http.request.HttpRequest
+        :type request: HttpRequest
         :param obj: an object
-        :type obj: django.db.models.Model
+        :type obj: Model
         :return: readonly fields
         :rtype: list
         """

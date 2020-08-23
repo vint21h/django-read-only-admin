@@ -41,7 +41,7 @@ repos:
       name: interrogate
       stages: [commit]
       language: system
-      entry: interrogate read_only_admin tests -I -M
+      entry: pipenv run interrogate read_only_admin tests -I -M
       types: [python]
     - id: pylint
       name: pylint
@@ -69,7 +69,6 @@ repos:
       language: system
       entry: pipenv run darglint
       types: [python]
-      pass_filenames: false
     - id: mypy
       name: mypy
       stages: [commit]
