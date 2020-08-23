@@ -4,8 +4,8 @@
 # read_only_admin/admin.py
 
 
-from collections import OrderedDict
 from functools import partial
+from collections import OrderedDict
 from typing import (  # pylint: disable=W0611
     Any,
     Dict,
@@ -17,15 +17,15 @@ from typing import (  # pylint: disable=W0611
     Optional,
 )
 
+from django.db import models
 from django.contrib import admin
-from django.contrib.admin.filters import SimpleListFilter
-from django.contrib.admin.utils import flatten_fieldsets
+from django.http import HttpRequest
+from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth import get_permission_codename
-from django.core.handlers.wsgi import WSGIRequest
-from django.db import models
+from django.contrib.admin.utils import flatten_fieldsets
+from django.contrib.admin.filters import SimpleListFilter
 from django.forms.models import BaseModelFormSet, modelformset_factory
-from django.http import HttpRequest
 
 from read_only_admin.conf import settings
 from read_only_admin.utils import get_read_only_permission_codename

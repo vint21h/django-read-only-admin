@@ -7,9 +7,9 @@
 from typing import List, Iterable, Optional  # pylint: disable=W0611
 
 from django.apps import AppConfig
+from django.db.utils import DEFAULT_DB_ALIAS
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
-from django.db.utils import DEFAULT_DB_ALIAS
 
 from read_only_admin.utils import (
     get_read_only_permission_name,

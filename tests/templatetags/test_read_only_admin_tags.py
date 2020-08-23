@@ -6,11 +6,11 @@
 
 from typing import List  # pylint: disable=W0611
 
+from django.test import TestCase
+from django.http import HttpRequest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
-from django.http import HttpRequest
 from django.template import Context, RequestContext
-from django.test import TestCase
 
 from read_only_admin.conf import settings
 from read_only_admin.templatetags.read_only_admin_tags import (

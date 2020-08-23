@@ -4,20 +4,20 @@
 # tests/test_admin.py
 
 
-from collections import OrderedDict
 from io import StringIO
+from collections import OrderedDict
 from typing import Any, List, Type, Iterable  # pylint: disable=W0611
 
-from django.contrib.admin.actions import delete_selected
-from django.contrib.admin.sites import AdminSite
+from django.test import TestCase
+from django.http import HttpRequest
 from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
+from django.test.utils import override_settings
+from django.contrib.admin.sites import AdminSite
 from django.contrib.auth.models import Permission
 from django.core.handlers.wsgi import WSGIRequest
+from django.contrib.admin.actions import delete_selected
 from django.forms.formsets import BaseFormSet  # pylint: disable=W0611
-from django.http import HttpRequest
-from django.test import TestCase
-from django.test.utils import override_settings
 
 from read_only_admin.admin import ReadonlyAdmin, ReadonlyChangeList
 
