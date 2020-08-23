@@ -42,7 +42,7 @@ class ReadonlyChangeListTest(TestCase):
     """
 
     @classmethod
-    def setUpTestData(cls):
+    def setUpTestData(cls) -> None:
         """
         Set up non-modified objects used by all test methods.
         """
@@ -56,7 +56,7 @@ class ReadonlyChangeListTest(TestCase):
         user.user_permissions.add(*list(Permission.objects.all()))
         user.save()
 
-    def test__init__(self):
+    def test__init__(self) -> None:
         """
         Init method must set readonly property to True.
         """
@@ -92,7 +92,7 @@ class ReadonlyAdminTest(TestCase):
     """
 
     @classmethod
-    def setUpTestData(cls):
+    def setUpTestData(cls) -> None:
         """
         Set up non-modified objects used by all test methods.
         """
@@ -109,9 +109,6 @@ class ReadonlyAdminTest(TestCase):
     def test_get_changelist(self) -> None:
         """
         Method must return read only change list class.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         request = HttpRequest()  # type: HttpRequest
@@ -127,9 +124,6 @@ class ReadonlyAdminTest(TestCase):
     def test_get_changelist_formset(self) -> None:
         """
         Method must return change list form set.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         request = HttpRequest()  # type: HttpRequest
@@ -145,9 +139,6 @@ class ReadonlyAdminTest(TestCase):
     def test_get_readonly_fields(self) -> None:
         """
         Method must return all form fields as read only.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         user = User.objects.first()
@@ -176,9 +167,6 @@ class ReadonlyAdminTest(TestCase):
     def test_get_actions(self) -> None:
         """
         Method must return empty actions list.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         user = User.objects.first()
@@ -196,9 +184,6 @@ class ReadonlyAdminTest(TestCase):
     def test_get_actions__without_empty_actions(self) -> None:
         """
         Method must return actions list resolved by available permissions.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         user = User.objects.first()
@@ -215,9 +200,6 @@ class ReadonlyAdminTest(TestCase):
     def test_get_readonly_fields__for_superuser(self) -> None:
         """
         Method must return empty read only fields for super user.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         user = User.objects.first()
@@ -236,9 +218,6 @@ class ReadonlyAdminTest(TestCase):
     def test_get_actions__for_superuser(self) -> None:
         """
         Method must return actions list resolved by available permissions.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         user = User.objects.first()
@@ -270,9 +249,6 @@ class ReadonlyAdminTest(TestCase):
     def test_get_actions__without_empty_actions__for_superuser(self) -> None:
         """
         Method must return actions list resolved by available permissions.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         user = User.objects.first()

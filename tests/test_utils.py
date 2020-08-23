@@ -26,7 +26,7 @@ class GetReadOnlyPermissionCodenameUtilTest(TestCase):
     get_read_only_permission_codename util tests.
     """
 
-    def test_get_read_only_permission_codename(self):
+    def test_get_read_only_permission_codename(self) -> None:
         """
         Util must return model read only permission codename based on read only prefix setting.  # noqa: E501
         """
@@ -36,7 +36,7 @@ class GetReadOnlyPermissionCodenameUtilTest(TestCase):
         )
 
     @override_settings(READ_ONLY_ADMIN_PERMISSION_PREFIX="")
-    def test_get_read_only_permission_codename__without_prefix(self):
+    def test_get_read_only_permission_codename__without_prefix(self) -> None:
         """
         Util must return model read only permission codename based on read only prefix setting with broken prefix settings.  # noqa: E501
         """
@@ -49,7 +49,7 @@ class GetReadOnlyPermissionNameUtilTest(TestCase):
     get_read_only_permission_name util tests.
     """
 
-    def test_get_read_only_permission_name(self):
+    def test_get_read_only_permission_name(self) -> None:
         """
         Util must return model read only permission name based on read only name prefix setting.  # noqa: E501
         """
@@ -57,7 +57,7 @@ class GetReadOnlyPermissionNameUtilTest(TestCase):
         self.assertEqual(get_read_only_permission_name(model="user"), "Read only user")
 
     @override_settings(READ_ONLY_ADMIN_PERMISSION_NAME_PREFIX="")
-    def test_get_read_only_permission_name__without_prefix(self):
+    def test_get_read_only_permission_name__without_prefix(self) -> None:
         """
         Util must return model read only permission name based on read only name prefix setting with broken name prefix settings.  # noqa: E501
         """

@@ -63,6 +63,13 @@ repos:
       entry: pipenv run dodgy
       types: [python]
       pass_filenames: false
+    - id: darglint
+      name: darglint
+      stages: [commit]
+      language: system
+      entry: pipenv run darglint
+      types: [python]
+      pass_filenames: false
     - id: mypy
       name: mypy
       stages: [commit]

@@ -36,9 +36,6 @@ class UnescapeTemplatetagTest(TestCase):
     def test_unescape(self) -> None:
         """
         Test templatetag.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         escaped = """&lt;script type=&quot;text/javascript&quot;&gt;alert(&#39;PWND &amp; HACKD!!1&#39;)&lt;/script&gt;"""  # noqa: E501, type: str
@@ -49,9 +46,6 @@ class UnescapeTemplatetagTest(TestCase):
     def test_unescape__single_quote(self) -> None:
         """
         Test templatetag for single quote char.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         escaped = "&#39;"  # type: str
@@ -62,9 +56,6 @@ class UnescapeTemplatetagTest(TestCase):
     def test_unescape__double_quote(self) -> None:
         """
         Test templatetag for double quote char.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         escaped = "&quot;"  # type: str
@@ -75,9 +66,6 @@ class UnescapeTemplatetagTest(TestCase):
     def test_unescape__less_than(self) -> None:
         """
         Test templatetag for less than char.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         escaped = "&lt;"  # type: str
@@ -88,9 +76,6 @@ class UnescapeTemplatetagTest(TestCase):
     def test_unescape__great_than(self) -> None:
         """
         Test templatetag for great than char.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         escaped = "&gt;"  # type: str
@@ -101,9 +86,6 @@ class UnescapeTemplatetagTest(TestCase):
     def test_unescape__ampersand(self) -> None:
         """
         Test templatetag for ampersand char.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         escaped = "&amp;"  # type: str
@@ -118,7 +100,7 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
     """
 
     @classmethod
-    def setUpTestData(cls):
+    def setUpTestData(cls) -> None:
         """
         Set up non-modified objects used by all test methods.
         """
@@ -135,9 +117,6 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
     def test_readonly_submit_row__return_context(self) -> None:
         """
         Test templatetag return context.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         user = User.objects.first()
@@ -167,9 +146,6 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
     def test_readonly_submit_row(self) -> None:
         """
         Test templatetag.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         user = User.objects.first()
@@ -202,9 +178,6 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
     def test_readonly_submit_row__for_superuser(self) -> None:
         """
         Test templatetag for superuser.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         user = User.objects.first()
@@ -239,9 +212,6 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
     def test_readonly_submit_row__without__read_only_permissions(self) -> None:
         """
         Test templatetag without read only permissions.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         Permission.objects.filter(
@@ -280,9 +250,6 @@ class ReadonlySubmitRowTemplatetagTest(TestCase):
     ) -> None:
         """
         Test templatetag without read only permissions for superuser.
-
-        :return: nothing.
-        :rtype: None.
         """
 
         user = User.objects.first()

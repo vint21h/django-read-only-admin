@@ -19,7 +19,7 @@ class AddReadOnlyPermissionsSignalTest(TestCase):
     Add read only permissions signal tests.
     """
 
-    def test_add_readonly_permissions(self):
+    def test_add_readonly_permissions(self) -> None:
         """
         Test signal.
         """
@@ -39,7 +39,7 @@ class AddReadOnlyPermissionsSignalTest(TestCase):
             ],
         )
 
-    def test_add_readonly_permissions__count(self):
+    def test_add_readonly_permissions__count(self) -> None:
         """
         Test signal create new permissions number.
         """
