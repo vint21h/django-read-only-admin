@@ -59,7 +59,7 @@ check-build:
 
 
 check-upload:
-	twine upload --skip-existing -s --repository-url $(TEST_PYPI_URL) dist/*;\
+	twine upload --skip-existing -s --repository-url $(TEST_PYPI_URL) -u __token__ -p $${TEST_TWINE_PASSWORD} dist/*;\
 
 
 upload:
