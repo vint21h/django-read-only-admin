@@ -80,17 +80,18 @@ coveralls:
 
 
 release:
-	make bumpversion &&\
-	git co master &&\
-	git merge dev &&\
-	git co dev &&\
-	git push --all &&\
-	git push --tags &&\
-	make build &&\
-	make sign &&\
-	make check-build &&\
-	make check-upload &&\
-	make upload &&\
+	make clean && \
+	make bumpversion && \
+	git co master && \
+	git merge dev && \
+	git co dev && \
+	git push --all && \
+	git push --tags && \
+	make build && \
+	make sign && \
+	make check-build && \
+	make check-upload && \
+	make upload && \
 	make clean;\
 
 
