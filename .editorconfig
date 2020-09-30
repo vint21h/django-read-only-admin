@@ -36,6 +36,11 @@ indent_style = space
 indent_size = 4
 
 
-[*.html]
+[*.cfg]
+indent_style = space
+indent_size = 4
+
+
+[*.{htm,html}]
 indent_style = space
 indent_size = 4
