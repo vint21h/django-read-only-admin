@@ -83,6 +83,13 @@ repos:
       entry: pipenv run dennis-cmd lint
       types: [pofile]
       pass_filenames: true
+    - id: curlylint
+      name: curlylint
+      stages: [commit]
+      language: system
+      entry: pipenv run curlylint
+      types: [html,xml]
+      pass_filenames: true
     - id: mypy
       name: mypy
       stages: [commit]
