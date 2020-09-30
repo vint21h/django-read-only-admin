@@ -103,7 +103,6 @@ repos:
       language: system
       pass_filenames: false
       entry: pipenv run check-manifest
-      types: [python]
     - id: pyroma
       name: pyroma
       stages: [commit]
