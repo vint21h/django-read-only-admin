@@ -111,6 +111,13 @@ repos:
       pass_filenames: false
       entry: pipenv run pyroma -d .
       types: [python]
+    - id: check-wheel-contents
+      name: check-wheel-contents
+      stages: [commit]
+      language: system
+      pass_filenames: false
+      entry: bash -c 'make build -B && pipenv run check-wheel-contents dist'
+      types: [python]
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.2.0
     hooks:
