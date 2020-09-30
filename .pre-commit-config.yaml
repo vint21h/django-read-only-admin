@@ -69,6 +69,13 @@ repos:
       language: system
       entry: pipenv run darglint
       types: [python]
+    - id: polint
+      name: polint
+      stages: [commit]
+      language: system
+      entry: pipenv run polint --ignore=location,unsorted --show-msg
+      types: [pofile]
+      pass_filenames: true
     - id: mypy
       name: mypy
       stages: [commit]
