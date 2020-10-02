@@ -236,7 +236,7 @@ class ReadonlyAdmin(ModelAdmin):
                             )
                         )
 
-        return self.readonly_fields
+        return self.readonly_fields  # type: ignore
 
     def get_actions(self, request: HttpRequest) -> "OrderedDict[str, Any]":
         """
@@ -351,7 +351,7 @@ class ReadonlyInline(TabularInline):
 
         return request.user.has_perm("%s.%s" % (self.opts.app_label, codename))
 
-    def get_readonly_fields(self, request, obj=None) -> List[str]:
+    def get_readonly_fields(self, request, obj=None) -> Union[List[str], Tuple[str]]:
         """
         Get readonly fields.
         Get from: https://github.com/anupamshakya7/django-admin-hack/.
@@ -361,7 +361,7 @@ class ReadonlyInline(TabularInline):
         :param obj: an object
         :type obj: Model
         :return: readonly fields
-        :rtype: list
+        :rtype: Union[List[str], Tuple[str]]
         """
 
         for permission in request.user.get_all_permissions():
@@ -386,7 +386,7 @@ class ReadonlyInline(TabularInline):
                         )
                     )
 
-        return self.readonly_fields
+        return self.readonly_fields  # type: ignore
 
 
 class ReadonlyStackedInline(ReadonlyInline):

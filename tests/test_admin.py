@@ -80,7 +80,7 @@ class ReadonlyChangeListTest(TestCase):
             model_admin=ReadOnlyUserAdmin(
                 model=get_user_model(), admin_site=AdminSite()
             ),
-            sortable_by=UserAdmin.sortable_by,
+            sortable_by=UserAdmin.sortable_by,  # type: ignore
         )  # type: ReadonlyChangeList
 
         self.assertTrue(expr=result.readonly)
