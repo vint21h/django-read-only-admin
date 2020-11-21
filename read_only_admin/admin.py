@@ -58,7 +58,7 @@ class ReadonlyChangeList(ChangeList):
         list_per_page: int,
         list_max_show_all: int,
         list_editable: Union[List[str], Tuple[str]],
-        model_admin: ModelAdmin,
+        model_admin: ModelAdmin,  # type: ignore
         sortable_by: Union[List[Callable], List[str], Tuple[str]],  # type: ignore
     ) -> None:
         """
@@ -125,7 +125,7 @@ class ReadonlyChangeList(ChangeList):
                     self.readonly = True
 
 
-class ReadonlyAdmin(ModelAdmin):
+class ReadonlyAdmin(ModelAdmin):  # type: ignore
     """
     Readonly admin.
     """
@@ -268,7 +268,7 @@ class ReadonlyAdmin(ModelAdmin):
         return actions
 
 
-class ReadonlyInline(TabularInline):
+class ReadonlyInline(TabularInline):  # type: ignore
     """
     Readonly admin inline.
     """
