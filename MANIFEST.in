@@ -2,7 +2,6 @@
 # MANIFEST.in
 
 
-prune .github*
 prune tests*
 recursive-include read_only_admin *.po
 recursive-include read_only_admin *.mo
