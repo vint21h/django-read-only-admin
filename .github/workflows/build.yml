@@ -13,7 +13,7 @@ on:
     branches:
       - "*"
 env:
-  default_python: "3.9"
+  DEFAULT_PYTHON_VERSION: "3.9"
 jobs:
   check:
     name: ${{ matrix.toxenv }}
@@ -26,10 +26,10 @@ jobs:
     steps:
       - name: Git clone
         uses: actions/checkout@v2
-      - name: Set up Python ${{ env.default_python }}
+      - name: Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ env.default_python }}
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
       - name: Pip cache
         uses: actions/cache@v2
         with:
@@ -92,10 +92,10 @@ jobs:
     steps:
       - name: Git clone
         uses: actions/checkout@v2
-      - name: Set up Python ${{ env.default_python }}
+      - name: Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}
         uses: actions/setup-python@v2
         with:
-          python-version: ${{ env.default_python }}
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
       - name: Pip cache
         uses: actions/cache@v2
         with:
