@@ -30,6 +30,13 @@ repos:
       language: system
       entry: pipenv run black read_only_admin tests
       types: [python]
+    - id: yesqa
+      name: yesqa
+      stages: [commit]
+      language: system
+      pass_filenames: false
+      entry: pipenv run yesqa
+      types: [python]
     - id: flake8
       name: flake8
       stages: [commit]
