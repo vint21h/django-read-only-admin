@@ -123,6 +123,14 @@ repos:
       pass_filenames: false
       entry: bash -c 'make build -B && pipenv run check-wheel-contents dist'
       types: [python]
+    - id: dotenv-linter
+      name: dotenv-linter
+      entry: pipenv run dotenv-linter
+      language: system
+      stages: [commit]
+      types: [text]
+      files: \.env*
+      exclude: .envrc
 -   repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v3.4.0
     hooks:
