@@ -4,9 +4,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: django-read-only-admin 0.14.19\n"
+"Project-Id-Version: django-read-only-admin 0.14.20\n"
 "Report-Msgid-Bugs-To: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
-"POT-Creation-Date: 2021-03-07 20:51+0200\n"
+"POT-Creation-Date: 2021-03-10 20:48+0200\n"
 "PO-Revision-Date: 2019-08-26 16:48+0300\n"
 "Last-Translator: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
 "Language-Team: Alexei Andrushievich <vint21h@vint21h.pp.ua>\n"
