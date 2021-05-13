@@ -10,97 +10,97 @@ repos:
       stages: [commit]
       language: system
       pass_filenames: false
-      entry: pipenv run seed-isort-config
+      entry: seed-isort-config
       types: [python]
     - id: removestar
       name: removestar
       stages: [commit]
       language: system
-      entry: pipenv run removestar -i read_only_admin tests
+      entry: removestar -i read_only_admin tests
       types: [python]
     - id: isort
       name: isort
       stages: [commit]
       language: system
-      entry: pipenv run isort
+      entry: isort
       types: [python]
     - id: black
       name: black
       stages: [commit]
       language: system
-      entry: pipenv run black read_only_admin tests
+      entry: black read_only_admin tests
       types: [python]
     - id: yesqa
       name: yesqa
       stages: [commit]
       language: system
       pass_filenames: false
-      entry: pipenv run yesqa
+      entry: yesqa
       types: [python]
     - id: flake8
       name: flake8
       stages: [commit]
       language: system
-      entry: pipenv run flake8
+      entry: flake8
       types: [python]
     - id: interrogate
       name: interrogate
       stages: [commit]
       language: system
-      entry: pipenv run interrogate read_only_admin tests -I -M
+      entry: interrogate read_only_admin tests -I -M
       types: [python]
     - id: pylint
       name: pylint
       stages: [commit]
       language: system
-      entry: pipenv run pylint read_only_admin tests
+      entry: pylint read_only_admin tests
       types: [python]
     - id: bandit
       name: bandit
       stages: [commit]
       language: system
-      entry: pipenv run bandit -r read_only_admin tests --ini=setup.cfg
+      entry: bandit -r read_only_admin tests --ini=setup.cfg
       types: [python]
       pass_filenames: false
     - id: dodgy
       name: dodgy
       stages: [commit]
       language: system
-      entry: pipenv run dodgy
+      entry: dodgy
       types: [python]
       pass_filenames: false
     - id: darglint
       name: darglint
       stages: [commit]
       language: system
-      entry: pipenv run darglint
+      entry: darglint
       types: [python]
     - id: polint
       name: polint
       stages: [commit]
       language: system
-      entry: pipenv run polint --ignore=location,unsorted --show-msg
+      entry: polint --ignore=location,unsorted --show-msg
       types: [pofile]
       pass_filenames: true
     - id: dennis
       name: dennis
       stages: [commit]
       language: system
-      entry: pipenv run dennis-cmd lint
+      entry: dennis-cmd lint
       types: [pofile]
       pass_filenames: true
     - id: curlylint
       name: curlylint
       stages: [commit]
       language: system
-      entry: pipenv run curlylint
+      entry: curlylint
       types: [html,xml]
       pass_filenames: true
     - id: mypy
       name: mypy
       stages: [commit]
       language: system
-      entry: bash -c 'PYTHONPATH="$PYTHONPATH:$PWD" pipenv run mypy'
+      entry: bash -c 'PYTHONPATH="$PYTHONPATH:$PWD" mypy'
       types: [python]
       pass_filenames: false
     - id: check-manifest
@@ -108,24 +108,24 @@ repos:
       stages: [commit]
       language: system
       pass_filenames: false
-      entry: pipenv run check-manifest
+      entry: check-manifest
     - id: pyroma
       name: pyroma
       stages: [commit]
       language: system
       pass_filenames: false
-      entry: pipenv run pyroma -d .
+      entry: pyroma -d .
       types: [python]
     - id: check-wheel-contents
       name: check-wheel-contents
       stages: [commit]
       language: system
       pass_filenames: false
-      entry: bash -c 'make build -B && pipenv run check-wheel-contents dist'
+      entry: bash -c 'make build -B && check-wheel-contents dist'
       types: [python]
     - id: dotenv-linter
       name: dotenv-linter
-      entry: pipenv run dotenv-linter
+      entry: dotenv-linter
       language: system
       stages: [commit]
       types: [text]

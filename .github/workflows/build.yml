@@ -12,6 +12,7 @@ on:
   pull_request:
     branches:
       - "*"
+  workflow_dispatch:
 env:
   DEFAULT_PYTHON_VERSION: "3.9"
 jobs:
@@ -40,7 +41,6 @@ jobs:
             ${{ runner.os }}-pip-
       - name: Install dependencies
         run: |
-          pip install pipenv
           pip install .[test]
       - name: Run ${{ matrix.toxenv }}
         run: tox -e ${{ matrix.toxenv }}
@@ -78,7 +78,6 @@ jobs:
           key: .coverage-${{ github.run_id }}-${{ github.run_number }}
       - name: Install dependencies
         run: |
-          pip install pipenv
           pip install .[test]
       - name: Run tests
         env:
@@ -100,9 +99,8 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ matrix.toxenv }}-${{ hashFiles('setup.py', 'setup.cfg', 'tox.ini') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('setup.py', 'setup.cfg', 'tox.ini') }}
           restore-keys: |
-            ${{ runner.os }}-pip-${{ matrix.toxenv }}-
             ${{ runner.os }}-pip-
       - name: Temporarily save coverage statistics
         uses: actions/cache@v2
@@ -111,7 +109,6 @@ jobs:
           key: .coverage-${{ github.run_id }}-${{ github.run_number }}
       - name: Install dependencies
         run: |
-          pip install pipenv
           pip install .[test]
       - name: Upload coverage report to Coveralls
         env:

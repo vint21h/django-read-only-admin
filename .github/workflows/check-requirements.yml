@@ -1,0 +1,43 @@
+# django-read-only-admin
+# .github/workflows/check-requirements.yml
+
+
+name: check-requirements
+on:
+  push:
+    branches:
+      - "*"
+    tags:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+env:
+  DEFAULT_PYTHON_VERSION: "3.9"
+jobs:
+  check-requirements:
+    name: check-requirements
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone
+        uses: actions/checkout@v2
+      - name: Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
+      - name: Pip cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('setup.py', 'setup.cfg', 'tox.ini') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install dependencies
+        run: |
+          pip install .[test]
+      - name: Check outdated requirements
+        continue-on-error: true
+        run: pip-outdated
