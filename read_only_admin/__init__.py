@@ -4,10 +4,10 @@
 # read_only_admin/__init__.py
 
 
-from typing import List  # pylint: disable=W0611
+from typing import List
 
 
-__all__ = ["default_app_config"]  # type: List[str]
+__all__: List[str] = ["default_app_config"]
 
 
-default_app_config = "read_only_admin.apps.DjangoReadOnlyAdminConfig"  # type: str
+default_app_config: str = "read_only_admin.apps.DjangoReadOnlyAdminConfig"

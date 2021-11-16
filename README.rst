@@ -71,16 +71,60 @@ Also tabular and stacked inlines are supported.
 
     class MyCustomTabularInline(ReadonlyTabularInline):
 
-        model = MyModel  # type: Type[Model]
-        extra = 0  # type: int
+        model: Type[Model] = MyModel
+        extra: int = 0
 
 
     class MyCustomStackedInline(ReadonlyStackedInline):
 
-        model = MyModel  # type: Type[Model]
-        extra = 0  # type: int
+        model: Type[Model] = MyModel
+        extra: int = 0
 
 If you use ``list_editable`` in your custom admin classes, copy ``read_only_admin/templates/admin/pagination.html`` to your project ``templates/admin`` directory.
+
+Contributing
+------------
+1. `Fork it <https://github.com/vint21h/django-read-only-admin/>`_
+2. Install `GNU Make <https://www.gnu.org/software/make/>`_
+3. Install and configure `pyenv <https://github.com/pyenv/pyenv/>`_ and `pyenv-virtualenv plugin <https://github.com/pyenv/pyenv-virtualenv/>`_
+4. Install and configure `direnv <https://github.com/direnv/direnv/>`_
+5. Create environment config from example
+
+.. code-block:: bash
+
+    cp .env.example .env
+
+6. Install development dependencies:
+
+.. code-block:: bash
+
+    make install
+
+7. Create your fix/feature branch:
+
+.. code-block:: bash
+
+    git checkout -b my-new-fix-or-feature
+
+8. Check code style and moreover:
+
+.. code-block:: bash
+
+    make check
+
+9. Run tests:
+
+.. code-block:: bash
+
+    make test
+
+10. Push to the branch:
+
+.. code-block:: bash
+
+    git push origin my-new-fix-or-feature
+
+11. `Create a new Pull Request <https://github.com/vint21h/django-read-only-admin/compare/>`_
 
 Licensing
 ---------

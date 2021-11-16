@@ -2,7 +2,7 @@
 # .github/workflows/build.yml
 
 
-name: build
+name: "build"
 on:
   push:
     branches:
@@ -14,103 +14,121 @@ on:
       - "*"
   workflow_dispatch:
 env:
-  DEFAULT_PYTHON_VERSION: "3.9"
+  NAME: "read_only_admin"
+  DEFAULT_PYTHON_VERSION: "3.10"
 jobs:
   check:
-    name: ${{ matrix.toxenv }}
-    runs-on: ubuntu-latest
+    name: "${{ matrix.toxenv }}"
+    runs-on: "ubuntu-latest"
     strategy:
       matrix:
-        toxenv:
-          - check
-          - check-build
+        toxenv: ["check", "check-build"]
     steps:
-      - name: Git clone
-        uses: actions/checkout@v2
-      - name: Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}
-        uses: actions/setup-python@v2
+      - name: "Git clone"
+        id: "git-clone"
+        uses: "actions/checkout@v2"
+      - name: "Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}"
+        id: "set-up-python"
+        uses: "actions/setup-python@v2"
         with:
-          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
-      - name: Pip cache
-        uses: actions/cache@v2
+          python-version: "${{ env.DEFAULT_PYTHON_VERSION }}"
+      - name: "Pip cache"
+        id: "pip-cache"
+        uses: "actions/cache@v2"
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ matrix.toxenv }}-${{ hashFiles('setup.py', 'setup.cfg', 'tox.ini') }}
+          path: "~/.cache/pip"
+          key: "${{ runner.os }}-pip-${{ matrix.toxenv }}-${{ hashFiles('setup.cfg') }}"
           restore-keys: |
-            ${{ runner.os }}-pip-${{ matrix.toxenv }}-
-            ${{ runner.os }}-pip-
-      - name: Install dependencies
-        run: |
-          pip install .[test]
-      - name: Run ${{ matrix.toxenv }}
-        run: tox -e ${{ matrix.toxenv }}
+            "${{ runner.os }}-pip-${{ matrix.toxenv }}-"
+            "${{ runner.os }}-pip-"
+      - name: "Pre-commit cache"
+        id: "pre-commit-cache"
+        uses: "actions/cache@v2"
+        with:
+          path: "~/.cache/pre-commit"
+          key: "${{ runner.os }}-pre-commit-${{ matrix.toxenv }}-${{ hashFiles('.pre-commit-config.yaml') }}"
+          restore-keys: |
+            "${{ runner.os }}-pre-commit-${{ matrix.toxenv }}-"
+            "${{ runner.os }}-pre-commit-"
+      - name: "Install requirements"
+        id: "install-requirements"
+        run: "make install"
+      - name: "Run ${{ matrix.toxenv }}"
+        id: "run"
+        run: "tox -e ${{ matrix.toxenv }}"
   test:
-    name: ${{ matrix.python-version }}
-    runs-on: ubuntu-latest
+    name: "${{ matrix.python-version }}"
+    runs-on: "ubuntu-latest"
     if: success()
-    needs: [check]
+    needs: ["check"]
     strategy:
       matrix:
-        python-version:
-          - "3.6"
-          - "3.7"
-          - "3.8"
-          - "3.9"
+        python-version: ["3.6", "3.7", "3.8", "3.9", "3.10"]
     steps:
-      - name: Git clone
-        uses: actions/checkout@v2
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+      - name: "Git clone"
+        id: "git-clone"
+        uses: "actions/checkout@v2"
+      - name: "Set up Python ${{ matrix.python-version }}"
+        id: "set-up-python"
+        uses: "actions/setup-python@v2"
         with:
-          python-version: ${{ matrix.python-version }}
-      - name: Pip cache
-        uses: actions/cache@v2
+          python-version: "${{ matrix.python-version }}"
+      - name: "Pip cache"
+        id: "pip-cache"
+        uses: "actions/cache@v2"
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('setup.py', 'setup.cfg', 'tox.ini') }}
+          path: "~/.cache/pip"
+          key: "${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('setup.cfg') }}"
           restore-keys: |
-            ${{ runner.os }}-pip-${{ matrix.python-version }}-
-            ${{ runner.os }}-pip-
-      - name: Temporarily save coverage statistics
-        uses: actions/cache@v2
+            "${{ runner.os }}-pip-${{ matrix.python-version }}-"
+            "${{ runner.os }}-pip-"
+      - name: "Temporarily save coverage statistics"
+        id: "temporarily-save-coverage-statistics"
+        uses: "actions/cache@v2"
         with:
-          path: .coverage
-          key: .coverage-${{ github.run_id }}-${{ github.run_number }}
-      - name: Install dependencies
-        run: |
-          pip install .[test]
-      - name: Run tests
+          path: ".coverage"
+          key: ".coverage-${{ github.run_id }}-${{ github.run_number }}"
+      - name: "Install requirements"
+        id: "install-requirements"
+        run: "make install"
+      - name: "Run tests"
+        id: "run-tests"
         env:
-          PLATFORM: ${{ matrix.platform }}
-        run: make tox
+          PLATFORM: "${{ matrix.platform }}"
+        run: "make tox"
   coveralls:
-    name: coveralls
-    runs-on: ubuntu-latest
+    name: "coveralls"
+    runs-on: "ubuntu-latest"
     if: success()
-    needs: [test, check]
+    needs: ["test", "check"]
     steps:
-      - name: Git clone
-        uses: actions/checkout@v2
-      - name: Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}
-        uses: actions/setup-python@v2
+      - name: "Git clone"
+        id: "git-clone"
+        uses: "actions/checkout@v2"
+      - name: "Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}"
+        id: "set-up-python"
+        uses: "actions/setup-python@v2"
         with:
-          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
-      - name: Pip cache
-        uses: actions/cache@v2
+          python-version: "${{ env.DEFAULT_PYTHON_VERSION }}"
+      - name: "Pip cache"
+        id: "pip-cache"
+        uses: "actions/cache@v2"
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('setup.py', 'setup.cfg', 'tox.ini') }}
+          path: "~/.cache/pip"
+          key: "${{ runner.os }}-pip-${{ hashFiles('setup.cfg') }}"
           restore-keys: |
-            ${{ runner.os }}-pip-
-      - name: Temporarily save coverage statistics
-        uses: actions/cache@v2
+            "${{ runner.os }}-pip-"
+      - name: "Temporarily save coverage statistics"
+        id: "temporarily-save-coverage-statistics"
+        uses: "actions/cache@v2"
         with:
-          path: .coverage
-          key: .coverage-${{ github.run_id }}-${{ github.run_number }}
-      - name: Install dependencies
-        run: |
-          pip install .[test]
-      - name: Upload coverage report to Coveralls
+          path: ".coverage"
+          key: ".coverage-${{ github.run_id }}-${{ github.run_number }}"
+      - name: "Install requirements"
+        id: "install-requirements"
+        run: "make install"
+      - name: "Upload coverage report to Coveralls"
+        id: "upload-coverage-report-to-coveralls"
         env:
-          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-        run: make coveralls
+          COVERALLS_REPO_TOKEN: "${{ secrets.COVERALLS_REPO_TOKEN }}"
+        run: "make coveralls"

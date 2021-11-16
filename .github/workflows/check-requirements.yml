@@ -2,7 +2,7 @@
 # .github/workflows/check-requirements.yml
 
 
-name: check-requirements
+name: "check-requirements"
 on:
   push:
     branches:
@@ -16,28 +16,32 @@ on:
     - cron: "0 3 * * *"
   workflow_dispatch:
 env:
-  DEFAULT_PYTHON_VERSION: "3.9"
+  DEFAULT_PYTHON_VERSION: "3.10"
 jobs:
   check-requirements:
-    name: check-requirements
-    runs-on: ubuntu-latest
+    name: "check-requirements"
+    runs-on: "ubuntu-latest"
     steps:
-      - name: Git clone
+      - name: "Git clone"
+        id: "git-clone"
         uses: actions/checkout@v2
-      - name: Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}
-        uses: actions/setup-python@v2
+      - name: "Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}"
+        id: "set-up-python"
+        uses: "actions/setup-python@v2"
         with:
-          python-version: ${{ env.DEFAULT_PYTHON_VERSION }}
-      - name: Pip cache
-        uses: actions/cache@v2
+          python-version: "${{ env.DEFAULT_PYTHON_VERSION }}"
+      - name: "Pip cache"
+        id: "pip-cache"
+        uses: "actions/cache@v2"
         with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('setup.py', 'setup.cfg', 'tox.ini') }}
+          path: "~/.cache/pip"
+          key: "${{ runner.os }}-pip-${{ hashFiles('setup.py', 'setup.cfg', 'tox.ini') }}"
           restore-keys: |
-            ${{ runner.os }}-pip-
-      - name: Install dependencies
-        run: |
-          pip install .[test]
-      - name: Check outdated requirements
+            "${{ runner.os }}-pip-"
+      - name: "Install requirements"
+        id: "install-requirements"
+        run: "make install"
+      - name: "Check outdated requirements"
+        id: "check-outdated-requirements"
         continue-on-error: true
-        run: pip-outdated
+        run: "pip-outdated"

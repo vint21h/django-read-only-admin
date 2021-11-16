@@ -50,7 +50,7 @@ sign:
 
 
 check:
-	pre-commit run --all-files;\
+	bash -c 'NAME="$(NAME)" pre-commit run --all-files';\
 
 
 check-build:

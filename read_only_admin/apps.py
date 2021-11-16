@@ -4,19 +4,17 @@
 # read_only_admin/apps.py
 
 
-from typing import List  # pylint: disable=W0611
+from typing import List
 
 from django.apps import AppConfig
 from django.utils.translation import gettext_lazy as _
 
 
-__all__ = ["DjangoReadOnlyAdminConfig"]  # type: List[str]
+__all__: List[str] = ["DjangoReadOnlyAdminConfig"]
 
 
 class DjangoReadOnlyAdminConfig(AppConfig):
-    """
-    Application config.
-    """
+    """Application config."""
 
-    name = "read_only_admin"  # type: str
-    verbose_name = _("Django read only admin")  # type: str
+    name: str = "read_only_admin"
+    verbose_name: str = _("Django read only admin")

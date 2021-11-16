@@ -4,7 +4,7 @@
 # read_only_admin/signals.py
 
 
-from typing import List, Iterable, Optional  # pylint: disable=W0611
+from typing import List, Iterable, Optional
 
 from django.apps import AppConfig
 from django.db.utils import DEFAULT_DB_ALIAS
@@ -17,10 +17,10 @@ from read_only_admin.utils import (
 )
 
 
-__all__ = ["add_readonly_permissions"]  # type: List[str]
+__all__: List[str] = ["add_readonly_permissions"]
 
 
-def add_readonly_permissions(
+def add_readonly_permissions(  # noqa: CFQ002
     sender: AppConfig,
     app_config: AppConfig,
     verbosity: int = 1,
@@ -32,7 +32,8 @@ def add_readonly_permissions(
     **kwargs,
 ) -> None:
     """
-    This migrate hooks takes care of adding a read only permission to all of your content types.  # noqa: E501
+    This migrate hooks takes care of adding a read only permission to all of your content types.
+
     Get from: https://github.com/anupamshakya7/django-admin-hack/.
 
     :param sender: installed application config instance
@@ -53,8 +54,7 @@ def add_readonly_permissions(
     :type args: list
     :param kwargs: additional arguments
     :type kwargs: dict
-    """
-
+    """  # noqa: E501
     for content_type in ContentType.objects.all():
         Permission.objects.get_or_create(
             content_type=content_type,

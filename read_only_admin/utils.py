@@ -4,15 +4,15 @@
 # read_only_admin/utils.py
 
 
-from typing import List  # pylint: disable=W0611
+from typing import List
 
 from read_only_admin.conf import settings
 
 
-__all__ = [
+__all__: List[str] = [
     "get_read_only_permission_codename",
     "get_read_only_permission_name",
-]  # type: List[str]
+]
 
 
 def get_read_only_permission_codename(model: str) -> str:
@@ -24,7 +24,6 @@ def get_read_only_permission_codename(model: str) -> str:
     :return: read only permission code name
     :rtype: str
     """
-
     return f"{settings.READ_ONLY_ADMIN_PERMISSION_PREFIX}_{model}"
 
 
@@ -37,5 +36,4 @@ def get_read_only_permission_name(model: str) -> str:
     :return: read only permission human readable name
     :rtype: str
     """
-
     return f"{settings.READ_ONLY_ADMIN_PERMISSION_NAME_PREFIX.capitalize()} {model}"
