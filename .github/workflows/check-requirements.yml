@@ -24,7 +24,7 @@ jobs:
     steps:
       - name: "Git clone"
         id: "git-clone"
-        uses: actions/checkout@v2
+        uses: "actions/checkout@v2"
       - name: "Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}"
         id: "set-up-python"
         uses: "actions/setup-python@v2"
@@ -35,7 +35,7 @@ jobs:
         uses: "actions/cache@v2"
         with:
           path: "~/.cache/pip"
-          key: "${{ runner.os }}-pip-${{ hashFiles('setup.py', 'setup.cfg', 'tox.ini') }}"
+          key: "${{ runner.os }}-pip-${{ hashFiles('setup.cfg') }}"
           restore-keys: |
             "${{ runner.os }}-pip-"
       - name: "Install requirements"
