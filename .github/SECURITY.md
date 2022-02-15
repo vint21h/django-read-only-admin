@@ -9,9 +9,9 @@
 So, because this is not a thing that can produce security problems in the project using it,
 security policy is very simple: supported only the last major or minor branch.
 
-| Version  | Supported          |
-| -------- | ------------------ |
-| 0.16.x   | :white_check_mark: |
+| Version | Supported          |
+|---------|--------------------|
+| 0.16.x  | :white_check_mark: |
 
 ## Reporting a Vulnerability
 

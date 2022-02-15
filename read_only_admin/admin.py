@@ -10,6 +10,7 @@ from typing import Any, Dict, List, Type, Tuple, Union, Callable, Optional
 
 from django.db.models import Model
 from django.http import HttpRequest
+from django import __version__ as django_version
 from django.core.handlers.wsgi import WSGIRequest
 from django.contrib.admin.views.main import ChangeList
 from django.contrib.auth import get_permission_codename
@@ -32,7 +33,7 @@ __all__: List[str] = [
 class ReadonlyChangeList(ChangeList):
     """Readonly admin change list."""
 
-    def __init__(  # noqa: CFQ002
+    def __init__(  # noqa: CFQ002, CCR001
         self,
         request: WSGIRequest,
         model: Type[Model],
@@ -49,6 +50,8 @@ class ReadonlyChangeList(ChangeList):
         list_editable: Union[List[str], Tuple[str]],
         model_admin: ModelAdmin,  # type: ignore
         sortable_by: Union[List[Callable], List[str], Tuple[str]],  # type: ignore
+        *args: List[Any],
+        **kwargs: Dict[str, Any],
     ) -> None:
         """
         Overridden to set extra readonly property.
@@ -79,22 +82,45 @@ class ReadonlyChangeList(ChangeList):
         :type model_admin: ModelAdmin
         :param sortable_by: brute enable/disable sorting for list of fields
         :type sortable_by: Union[List[Callable], List[str], Tuple[str]]
+        :param args: additional args
+        :type args: List[Any]
+        :param kwargs: additional args
+        :type kwargs: Dict[str, Any]
         """  # noqa: E501
-        super(ReadonlyChangeList, self).__init__(
-            request=request,
-            model=model,
-            list_display=list_display,
-            list_display_links=list_display_links,
-            list_filter=list_filter,
-            date_hierarchy=date_hierarchy,
-            search_fields=search_fields,
-            list_select_related=list_select_related,
-            list_per_page=list_per_page,
-            list_max_show_all=list_max_show_all,
-            list_editable=list_editable,
-            model_admin=model_admin,
-            sortable_by=sortable_by,
-        )
+        # dealing with Django 4.x backward incompatibility
+        if django_version.startswith("4"):
+            super(ReadonlyChangeList, self).__init__(
+                request=request,
+                model=model,
+                list_display=list_display,
+                list_display_links=list_display_links,
+                list_filter=list_filter,
+                date_hierarchy=date_hierarchy,
+                search_fields=search_fields,
+                list_select_related=list_select_related,
+                list_per_page=list_per_page,
+                list_max_show_all=list_max_show_all,
+                list_editable=list_editable,
+                model_admin=model_admin,
+                sortable_by=sortable_by,
+                search_help_text=kwargs.get("search_help_text", ""),  # type: ignore
+            )
+        else:
+            super(ReadonlyChangeList, self).__init__(  # pylint: disable=E1120
+                request=request,
+                model=model,
+                list_display=list_display,
+                list_display_links=list_display_links,
+                list_filter=list_filter,
+                date_hierarchy=date_hierarchy,
+                search_fields=search_fields,
+                list_select_related=list_select_related,
+                list_per_page=list_per_page,
+                list_max_show_all=list_max_show_all,
+                list_editable=list_editable,
+                model_admin=model_admin,
+                sortable_by=sortable_by,
+            )
 
         self.readonly = False
 

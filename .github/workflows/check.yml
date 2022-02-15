@@ -1,0 +1,51 @@
+# django-read-only-admin
+# .github/workflows/check.yml
+
+
+name: "check"
+on:
+  workflow_dispatch:
+  workflow_call:
+env:
+  NAME: "xicon"
+  DEFAULT_PYTHON_VERSION: "3.10"
+jobs:
+  check:
+    name: "${{ matrix.toxenv }}"
+    runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        toxenv: ["check", "check-build"]
+    steps:
+      - name: "Git clone"
+        id: "git-clone"
+        uses: "actions/checkout@v2"
+      - name: "Set up Python ${{ env.DEFAULT_PYTHON_VERSION }}"
+        id: "set-up-python"
+        uses: "actions/setup-python@v2"
+        with:
+          python-version: "${{ env.DEFAULT_PYTHON_VERSION }}"
+      - name: "Pip cache"
+        id: "pip-cache"
+        uses: "actions/cache@v2"
+        with:
+          path: "~/.cache/pip"
+          key: "${{ runner.os }}-pip-${{ matrix.toxenv }}-${{ hashFiles('setup.cfg') }}"
+          restore-keys: |
+            "${{ runner.os }}-pip-${{ matrix.toxenv }}-"
+            "${{ runner.os }}-pip-"
+      - name: "Pre-commit cache"
+        id: "pre-commit-cache"
+        uses: "actions/cache@v2"
+        with:
+          path: "~/.cache/pre-commit"
+          key: "${{ runner.os }}-pre-commit-${{ matrix.toxenv }}-${{ hashFiles('.pre-commit-config.yaml') }}"
+          restore-keys: |
+            "${{ runner.os }}-pre-commit-${{ matrix.toxenv }}-"
+            "${{ runner.os }}-pre-commit-"
+      - name: "Install requirements"
+        id: "install-requirements"
+        run: "make install"
+      - name: "Run ${{ matrix.toxenv }}"
+        id: "run"
+        run: "tox -e ${{ matrix.toxenv }}"

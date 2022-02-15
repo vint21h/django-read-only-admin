@@ -1,26 +1,17 @@
 # django-read-only-admin
-# .github/workflows/check-requirements.yml
+# .github/workflows/build.yml
 
 
-name: "check-requirements"
+name: "coveralls"
 on:
-  push:
-    branches:
-      - "*"
-    tags:
-      - "*"
-  pull_request:
-    branches:
-      - "*"
-  schedule:
-    - cron: "0 3 * * *"
   workflow_dispatch:
   workflow_call:
 env:
+  NAME: "xicon"
   DEFAULT_PYTHON_VERSION: "3.10"
 jobs:
-  check-requirements:
-    name: "check-requirements"
+  coveralls:
+    name: "coveralls"
     runs-on: "ubuntu-latest"
     steps:
       - name: "Git clone"
@@ -39,10 +30,17 @@ jobs:
           key: "${{ runner.os }}-pip-${{ hashFiles('setup.cfg') }}"
           restore-keys: |
             "${{ runner.os }}-pip-"
+      - name: "Temporarily save coverage statistics"
+        id: "temporarily-save-coverage-statistics"
+        uses: "actions/cache@v2"
+        with:
+          path: ".coverage"
+          key: ".coverage-${{ github.run_id }}-${{ github.run_number }}"
       - name: "Install requirements"
         id: "install-requirements"
         run: "make install"
-      - name: "Check outdated requirements"
-        id: "check-outdated-requirements"
-        continue-on-error: true
-        run: "pip-outdated"
+      - name: "Upload coverage report to Coveralls"
+        id: "upload-coverage-report-to-coveralls"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        run: "coveralls --service=github"
