@@ -1,5 +1,5 @@
 # django-read-only-admin
-# .github/workflows/build.yml
+# .github/workflows/test.yml
 
 
 name: "test"
