@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
   workflow_call:
 env:
-  NAME: "xicon"
+  NAME: "read_only_admin"
 jobs:
   test:
     name: "${{ matrix.python-version }}"
