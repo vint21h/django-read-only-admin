@@ -24,7 +24,7 @@ jobs:
           python-version: "${{ env.DEFAULT_PYTHON_VERSION }}"
       - name: "Pip cache"
         id: "pip-cache"
-        uses: "actions/cache@v2"
+        uses: "actions/cache@v3.0.1"
         with:
           path: "~/.cache/pip"
           key: "${{ runner.os }}-pip-${{ hashFiles('setup.cfg') }}"
@@ -32,7 +32,7 @@ jobs:
             "${{ runner.os }}-pip-"
       - name: "Temporarily save coverage statistics"
         id: "temporarily-save-coverage-statistics"
-        uses: "actions/cache@v2"
+        uses: "actions/cache@v3.0.1"
         with:
           path: ".coverage"
           key: ".coverage-${{ github.run_id }}-${{ github.run_number }}"

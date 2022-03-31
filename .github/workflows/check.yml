@@ -27,7 +27,7 @@ jobs:
           python-version: "${{ env.DEFAULT_PYTHON_VERSION }}"
       - name: "Pip cache"
         id: "pip-cache"
-        uses: "actions/cache@v2"
+        uses: "actions/cache@v3.0.1"
         with:
           path: "~/.cache/pip"
           key: "${{ runner.os }}-pip-${{ matrix.toxenv }}-${{ hashFiles('setup.cfg') }}"
@@ -36,7 +36,7 @@ jobs:
             "${{ runner.os }}-pip-"
       - name: "Pre-commit cache"
         id: "pre-commit-cache"
-        uses: "actions/cache@v2"
+        uses: "actions/cache@v3.0.1"
         with:
           path: "~/.cache/pre-commit"
           key: "${{ runner.os }}-pre-commit-${{ matrix.toxenv }}-${{ hashFiles('.pre-commit-config.yaml') }}"
